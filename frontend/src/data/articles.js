@@ -4,6 +4,7 @@
 export const ARTICLES = [
   {
     slug: "verhuurde-woning-verkopen",
+    seoTitle: "Verhuurde woning verkopen",
     title: "Verhuurde woning verkopen: zo werkt het",
     description:
       "Een woning met huurder verkopen? Lees wat er met het huurcontract gebeurt, wie uw kopers zijn en hoe u snel en zeker verkoopt.",
@@ -58,6 +59,7 @@ export const ARTICLES = [
   },
   {
     slug: "woningportefeuille-verkopen",
+    seoTitle: "Woningportefeuille verkopen",
     title: "Woningportefeuille verkopen aan één koper",
     description:
       "Meerdere verhuurde woningen tegelijk verkopen? Waarom één koper voor de hele portefeuille tijd en zorgen scheelt, en waar u op let.",
@@ -106,6 +108,7 @@ export const ARTICLES = [
   },
   {
     slug: "geerfd-vastgoed-verkopen",
+    seoTitle: "Geërfde woning of pand verkopen",
     title: "Geërfde woning of pand verkopen",
     description:
       "Vastgoed geërfd en samen met andere erfgenamen verkopen? Wat er geregeld moet zijn en hoe u snel duidelijkheid krijgt.",
@@ -147,6 +150,7 @@ export const ARTICLES = [
   },
   {
     slug: "stoppen-als-verhuurder",
+    seoTitle: "Stoppen als verhuurder: uw opties",
     title: "Stoppen als verhuurder: uw opties op een rij",
     description:
       "Nieuwe huurregels en belastingdruk maken verhuren voor veel particulieren minder aantrekkelijk. Welke opties heeft u en wat past bij u?",
@@ -194,6 +198,7 @@ export const ARTICLES = [
   },
   {
     slug: "bedrijfspand-verkopen",
+    seoTitle: "Bedrijfspand verkopen aan belegger",
     title: "Bedrijfspand verkopen aan een belegger",
     description:
       "Uw bedrijfspand, kantoor of bedrijfshal verkopen aan een belegger? Over verhuurd verkopen, sale-and-leaseback en wat een koper wil weten.",
@@ -235,6 +240,7 @@ export const ARTICLES = [
   },
   {
     slug: "verkopen-zonder-makelaar",
+    seoTitle: "Vastgoed verkopen zonder makelaar",
     title: "Vastgoed verkopen zonder makelaar: voor- en nadelen",
     description:
       "Zelf verkopen, via een makelaar of direct aan een koper? Een eerlijk overzicht van de voor- en nadelen van verkopen zonder makelaar.",
@@ -285,6 +291,7 @@ export const ARTICLES = [
   },
   {
     slug: "koop-breekt-geen-huur",
+    seoTitle: "Koop breekt geen huur uitgelegd",
     title: "Koop breekt geen huur: wat betekent dat?",
     description:
       "Wat gebeurt er met de huurder als u een verhuurd pand verkoopt? Uitleg over de regel 'koop breekt geen huur' voor woningen en bedrijfsruimte.",
@@ -325,6 +332,7 @@ export const ARTICLES = [
   },
   {
     slug: "leegstaand-pand-verkopen",
+    seoTitle: "Leegstaand pand verkopen",
     title: "Leegstaand pand of pand met achterstallig onderhoud verkopen",
     description:
       "Een pand dat leeg staat of veel onderhoud nodig heeft, kost geld. Hoe u zo'n object verkoopt zonder eerst zelf te investeren.",

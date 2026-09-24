@@ -12,6 +12,13 @@ export const COMPANY = {
 
 export const LOCALES = ["nl", "en"];
 
+// Content last changed (sitemap lastmod). Bump when page copy changes; a stable
+// date keeps search engines trusting lastmod instead of every build's time.
+export const SITE_UPDATED = "2026-09-24";
+
+// IndexNow key (Bing, Yandex, Seznam, Naver): public/<key>.txt holds the same value.
+export const INDEXNOW_KEY = "142b8dcbd0bb37d27c205839a330328e";
+
 // Every page exists in both languages. The key links a Dutch URL to its
 // English counterpart (language toggle, hreflang, sitemap).
 export const ROUTES = {

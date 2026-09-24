@@ -9,6 +9,7 @@ import FaqAccordion from "@/components/sections/FaqAccordion";
 import SegmentGrid from "@/components/sections/SegmentGrid";
 import ArticleTeaser from "@/components/sections/ArticleTeaser";
 import CtaBox from "@/components/sections/CtaBox";
+import RegionsTeaser from "@/components/sections/RegionsTeaser";
 import LeadForm from "@/components/forms/LeadForm";
 import { IMAGES, href } from "@/data/site";
 import { ARTICLES } from "@/data/articles";
@@ -78,6 +79,7 @@ export default function SegmentView({ locale, segment }) {
       </section>
 
       <ArticleTeaser locale={locale} slugs={related.length ? related : undefined} />
+      {locale === "nl" && <RegionsTeaser locale={locale} />}
       <CtaBox locale={locale} />
 
       <JsonLd data={serviceLd({ name: page.title, description: page.text, path: href(segment, locale), serviceType: seg.title })} />

@@ -82,3 +82,16 @@ jobs:
           done
           curl -s https://hollandsvastgoedfonds.com/ | grep -q "Hollands Vastgoedfonds"
           echo "::notice::LIVE at https://hollandsvastgoedfonds.com/"
+
+      # Tell Bing/Yandex/Seznam (IndexNow) about every URL in the sitemap so
+      # changes are recrawled within hours. Failure here never fails the deploy.
+      - name: Ping IndexNow
+        working-directory: .
+        continue-on-error: true
+        run: |
+          KEY=$(grep -oE 'INDEXNOW_KEY = "[0-9a-f]+"' frontend/src/data/site.js | grep -oE '[0-9a-f]{32}')
+          URLS=$(curl -s https://hollandsvastgoedfonds.com/sitemap.xml | grep -oE '<loc>[^<]+' | sed 's/<loc>//' | python3 -c 'import sys,json; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          curl -s -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"hollandsvastgoedfonds.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://hollandsvastgoedfonds.com/$KEY.txt\",\"urlList\":$URLS}"
+

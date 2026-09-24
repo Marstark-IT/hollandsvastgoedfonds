@@ -124,6 +124,7 @@ export const REGIONS = [
   {
     slug: "nijmegen",
     name: "Nijmegen en Arnhem",
+    short: "Nijmegen en Arnhem",
     province: "Gelderland",
     image: "special",
     intro:
@@ -142,3 +143,10 @@ export const REGIONS = [
 
 export const regionBySlug = (slug) => REGIONS.find((r) => r.slug === slug);
 export const regionPath = (slug) => `/regios/${slug}/`;
+
+// Intro copy for the /regios/ hub.
+export const REGIONS_INTRO = [
+  "Hollands Vastgoedfonds investeert per periode gericht in een aantal regio's. Binnen die regio's stellen wij kapitaal beschikbaar voor nieuwe aankopen en bouwen wij een actieve pijplijn op van woningen, portefeuilles en bedrijfsmatig vastgoed.",
+  "Ligt uw object in een van de steden hieronder, of in de omgeving daarvan? Dan kunt u het direct aanbieden. Ligt het ergens anders in Nederland, bied het dan ook gerust aan: wij registreren elk object en nemen contact op zodra er in uw regio kapitaal beschikbaar is.",
+  "Per stad leest u wat wij daar vooral kopen en welke kenmerken van de lokale markt wij meenemen in ons voorstel, zoals erfpacht in Amsterdam, mijnbouwschade in Groningen of de logistieke functie van Tilburg.",
+];

@@ -5,70 +5,94 @@ const nl = {
   meta: {
     siteName: "Hollands Vastgoedfonds",
     home: {
-      title: "Vastgoed verkopen aan een directe koper | Hollands Vastgoedfonds",
+      title: "Vastgoed verkopen aan een belegger | Hollands Vastgoedfonds",
       description:
-        "Hollands Vastgoedfonds koopt woningen, portefeuilles, commercieel en bedrijfsvastgoed direct en voor eigen rekening. Geen makelaar, discreet en snel duidelijkheid.",
+        "Verkoop uw woning, portefeuille of bedrijfspand direct aan Hollands Vastgoedfonds. Geen makelaar, geen courtage, discreet en snel duidelijkheid.",
     },
     approach: {
-      title: "Werkwijze en regionale kapitaalallocatie",
+      title: "Werkwijze: zo kopen wij vastgoed",
       description:
-        "Hoe Hollands Vastgoedfonds kapitaal per regio alloceert en vastgoed beoordeelt, van eerste analyse tot closing.",
+        "Zo koopt Hollands Vastgoedfonds vastgoed: regionale kapitaalallocatie, eigen analyse en due diligence, en een overdracht bij de notaris.",
     },
     buy: {
-      title: "Wat wij kopen",
+      title: "Welk vastgoed wij kopen",
       description:
-        "Wij kopen residentieel, commercieel en bedrijfsvastgoed, losse objecten en complete portefeuilles, ook verhuurd.",
+        "Wij kopen woningen, woningportefeuilles, kantoren, winkels, bedrijfshallen en logistiek vastgoed. Verhuurd of leeg, direct en zonder makelaar.",
     },
     residential: {
-      title: "Woningen en woningportefeuilles verkopen",
+      title: "Woning of portefeuille verkopen",
       description:
-        "Verkoop uw woning, appartementencomplex of verhuurde woningportefeuille direct aan Hollands Vastgoedfonds. Huurders blijven gewoon zitten.",
+        "Verkoop uw woning, appartementencomplex of verhuurde woningportefeuille direct aan een belegger. Huurders blijven zitten, geen courtage.",
     },
     commercial: {
       title: "Commercieel vastgoed verkopen",
       description:
-        "Kantoren, winkels en mixed-use panden direct verkopen aan een koper met eigen kapitaal. Discreet en zonder makelaar.",
+        "Kantoor, winkelpand of mixed-use pand verkopen aan een belegger met eigen kapitaal. Verhuurd of leeg, discreet en zonder makelaarskosten.",
     },
     industrial: {
-      title: "Bedrijfsvastgoed en logistiek verkopen",
+      title: "Bedrijfspand of hal verkopen",
       description:
-        "Bedrijfshallen, light-industrial en logistiek vastgoed verkopen aan Hollands Vastgoedfonds. Direct, voor eigen rekening en risico.",
+        "Bedrijfshal, light-industrial of logistiek vastgoed verkopen aan Hollands Vastgoedfonds. Ook met sale-and-leaseback. Direct en zonder makelaar.",
     },
     special: {
-      title: "Bijzondere situaties en herontwikkeling",
+      title: "Pand met potentieel verkopen",
       description:
-        "Vastgoed met herontwikkelings- of transformatiepotentieel, of een verkoop waarbij snelheid en discretie tellen.",
+        "Leegstaand pand, achterstallig onderhoud of herontwikkelingspotentieel? Wij kopen direct en discreet, ook bij tijdsdruk of een afwijkende structuur.",
     },
     about: {
-      title: "Over ons",
+      title: "Over ons: onafhankelijke belegger",
       description:
-        "Hollands Vastgoedfonds is een onafhankelijke vastgoedinvesteerder met een langetermijnstrategie en een institutionele werkwijze.",
+        "Hollands Vastgoedfonds is een onafhankelijke vastgoedinvesteerder met een langetermijnstrategie. Wij kopen vastgoed direct en voor eigen rekening.",
     },
     faq: {
-      title: "Veelgestelde vragen",
+      title: "Veelgestelde vragen over verkoop",
       description:
-        "Antwoorden op vragen over verkopen aan Hollands Vastgoedfonds: kosten, huurders, snelheid, regio's en vertrouwelijkheid.",
+        "Antwoorden over vastgoed verkopen aan Hollands Vastgoedfonds: kosten, verhuurd vastgoed, huurders, de notaris, snelheid en uw privacy.",
     },
     contact: {
-      title: "Contact",
-      description: "Bied uw vastgoed vrijblijvend aan of stel uw vraag aan Hollands Vastgoedfonds.",
+      title: "Contact opnemen",
+      description:
+        "Neem contact op met Hollands Vastgoedfonds. Bied uw vastgoed vrijblijvend aan via het formulier of stel uw vraag per e-mail. Wij reageren persoonlijk.",
     },
     offer: {
       title: "Vastgoed aanbieden",
-      description: "Bied uw woning, portefeuille of bedrijfspand vrijblijvend aan bij Hollands Vastgoedfonds. In drie korte stappen, u ontvangt direct een bevestiging.",
+      description:
+        "Bied uw woning, portefeuille of bedrijfspand vrijblijvend aan bij Hollands Vastgoedfonds. Drie korte stappen en direct een bevestiging per e-mail.",
     },
-    thanks: { title: "Bedankt voor uw aanvraag", description: "Wij hebben uw aanvraag ontvangen." },
-    privacy: { title: "Privacyverklaring", description: "Hoe Hollands Vastgoedfonds met uw persoonsgegevens omgaat." },
-    cookies: { title: "Cookieverklaring", description: "Welke cookies hollandsvastgoedfonds.com gebruikt." },
-    disclaimer: { title: "Disclaimer", description: "Voorwaarden voor het gebruik van deze website." },
-    notFound: { title: "Pagina niet gevonden", description: "Deze pagina bestaat niet (meer)." },
+    thanks: {
+      title: "Bedankt voor uw aanvraag",
+      description:
+        "Bedankt voor uw aanvraag bij Hollands Vastgoedfonds. Een acquisitiemanager neemt persoonlijk contact met u op over uw object en de volgende stappen.",
+    },
+    privacy: {
+      title: "Privacyverklaring",
+      description:
+        "Lees hoe Hollands Vastgoedfonds omgaat met uw persoonsgegevens: welke gegevens wij verwerken, waarom, hoe lang wij ze bewaren en wat uw rechten zijn.",
+    },
+    cookies: {
+      title: "Cookieverklaring",
+      description:
+        "Welke cookies hollandsvastgoedfonds.com gebruikt: zonder toestemming geen tracking. Onze eigen statistieken werken zonder cookies en zonder IP-adressen.",
+    },
+    disclaimer: {
+      title: "Disclaimer",
+      description:
+        "De voorwaarden voor het gebruik van hollandsvastgoedfonds.com: over de informatie op deze website, intellectueel eigendom en het ontbreken van een aanbod.",
+    },
+    notFound: {
+      title: "Pagina niet gevonden",
+      description:
+        "Deze pagina bestaat niet (meer). Ga naar de homepage van Hollands Vastgoedfonds of bekijk welk vastgoed wij kopen en hoe onze werkwijze eruitziet.",
+    },
     kennisbank: {
       title: "Kennisbank: vastgoed verkopen",
-      description: "Praktische artikelen over het verkopen van verhuurde woningen, portefeuilles, bedrijfspanden en geërfd vastgoed aan een directe koper.",
+      description:
+        "Praktische artikelen over het verkopen van verhuurde woningen, woningportefeuilles, bedrijfspanden en geërfd vastgoed aan een directe koper.",
     },
     regions: {
       title: "Regio's waar wij vastgoed kopen",
-      description: "Hollands Vastgoedfonds koopt vastgoed in heel Nederland. Bekijk wat wij kopen in Amsterdam, Rotterdam, Den Haag, Utrecht en andere steden.",
+      description:
+        "Hollands Vastgoedfonds koopt vastgoed in heel Nederland, onder meer in Amsterdam, Rotterdam, Den Haag, Utrecht, Eindhoven, Groningen en Tilburg.",
     },
   },
 
@@ -297,6 +321,12 @@ const nl = {
         },
       ],
       closing: "Kapitaal met discipline ingezet. Vastgoed met overtuiging gekocht.",
+      storyTitle: "Hoe wij investeren",
+      story: [
+        "Hollands Vastgoedfonds is een onafhankelijke vastgoedinvesteringsmaatschappij, gericht op de aankoop, allocatie en het actief beheer van residentieel en bedrijfsmatig vastgoed. Vanuit een langetermijnstrategie investeren wij in zorgvuldig geselecteerde vastgoedmarkten in Nederland en daarbuiten.",
+        "Onze focus omvat zowel losse objecten als omvangrijke portefeuilles binnen de residentiële, commerciële en light-industrial sector. Per investeringsperiode kiest onze Investment Committee de regio's en segmenten waar nieuw kapitaal naartoe gaat. Daarbij kijken wij onder meer naar liquiditeit van de markt, demografische ontwikkeling, de huurmarkt, vervangingswaarde en waardecreatie op lange termijn.",
+        "Wij zijn geen makelaar of bemiddelaar. Bij een aankoop treden wij zelf op als kopende partij, binnen het beschikbare mandaat. Van eerste analyse en taxatie tot due diligence, structurering en overdracht coördineren wij alles in eigen huis. Zo kunnen wij snel handelen wanneer een object past, zonder concessies aan onze investeringsdiscipline.",
+      ],
     },
     contact: {
       title: "Contact",
@@ -304,6 +334,13 @@ const nl = {
       emailLabel: "E-mail",
       hoursTitle: "Bereikbaarheid",
       hoursText: "Wij behandelen elke aanvraag persoonlijk en reageren op werkdagen. U ontvangt direct een bevestiging per e-mail.",
+      helpTitle: "Waarvoor u ons kunt benaderen",
+      help: [
+        { title: "Verkoop van een woning", text: "Een eengezinswoning of appartement, verhuurd of leeg, in elke staat." },
+        { title: "Verkoop van een portefeuille", text: "Meerdere woningen of bedrijfspanden in één transactie, met één aanspreekpunt." },
+        { title: "Bedrijfsvastgoed", text: "Kantoren, winkels, bedrijfshallen en logistiek vastgoed, ook met terughuur." },
+        { title: "Vragen over uw situatie", text: "Erfenis, stoppen als verhuurder of een pand met leegstand: wij denken vrijblijvend mee." },
+      ],
     },
     thanks: {
       title: "Bedankt. Wij hebben uw aanvraag ontvangen.",
@@ -443,63 +480,93 @@ const en = {
     home: {
       title: "Sell property to a direct buyer | Hollands Vastgoedfonds",
       description:
-        "Hollands Vastgoedfonds buys homes, portfolios, commercial and industrial property directly and for its own account. No agent, discreet, fast clarity.",
+        "Sell your home, portfolio or business premises directly to Hollands Vastgoedfonds. No agent, no commission, discreet and quick clarity on price.",
     },
     approach: {
-      title: "Approach and regional capital allocation",
+      title: "Our approach to buying property",
       description:
-        "How Hollands Vastgoedfonds allocates capital by region and assesses property, from first analysis to closing.",
+        "How Hollands Vastgoedfonds buys property: regional capital allocation, in-house analysis and due diligence, and completion through a notary.",
     },
     buy: {
-      title: "What we buy",
+      title: "What property we buy",
       description:
-        "We buy residential, commercial and industrial property, single assets and complete portfolios, including let property.",
+        "We buy homes, residential portfolios, offices, shops, business units and logistics property in the Netherlands. Let or vacant, directly and without an agent.",
     },
     residential: {
-      title: "Sell homes and residential portfolios",
+      title: "Sell homes or a portfolio",
       description:
-        "Sell your home, apartment building or let residential portfolio directly to Hollands Vastgoedfonds. Tenants simply stay.",
+        "Sell your home, apartment building or let residential portfolio directly to an investor. Tenants simply stay, and you pay no agent commission.",
     },
     commercial: {
       title: "Sell commercial property",
       description:
-        "Sell offices, shops and mixed-use buildings directly to a buyer with its own capital. Discreet and without an agent.",
+        "Sell an office, shop or mixed-use building to an investor with its own capital. Let or vacant, discreet and without agent fees or a financing condition.",
     },
     industrial: {
-      title: "Sell industrial and logistics property",
+      title: "Sell industrial property",
       description:
-        "Sell business units, light-industrial and logistics property to Hollands Vastgoedfonds. Direct, for our own account and risk.",
+        "Sell a business unit, light-industrial or logistics property to Hollands Vastgoedfonds, including sale-and-leaseback. Direct and without an agent.",
     },
     special: {
-      title: "Special situations and redevelopment",
+      title: "Sell property with potential",
       description:
-        "Property with redevelopment or conversion potential, or a sale where speed and discretion matter.",
+        "Vacant building, deferred maintenance or redevelopment potential? We buy directly and discreetly, also under time pressure or with a custom structure.",
     },
     about: {
-      title: "About us",
+      title: "About us: independent investor",
       description:
-        "Hollands Vastgoedfonds is an independent real estate investor with a long-term strategy and an institutional approach.",
+        "Hollands Vastgoedfonds is an independent real estate investor with a long-term strategy. We buy property directly and for our own account in the Netherlands.",
     },
     faq: {
-      title: "Frequently asked questions",
+      title: "Questions about selling",
       description:
-        "Answers about selling to Hollands Vastgoedfonds: costs, tenants, timing, regions and confidentiality.",
+        "Answers about selling property to Hollands Vastgoedfonds: costs, let property, tenants, the notary, timing and how we handle your personal data.",
     },
     contact: {
-      title: "Contact",
-      description: "Offer your property without obligation or ask Hollands Vastgoedfonds a question.",
+      title: "Contact us",
+      description:
+        "Contact Hollands Vastgoedfonds. Offer your property without obligation using the form, or email us your question. Every request is handled personally.",
     },
     offer: {
       title: "Offer your property",
-      description: "Offer your home, portfolio or business premises to Hollands Vastgoedfonds without obligation. Three short steps, instant confirmation.",
+      description:
+        "Offer your home, portfolio or business premises to Hollands Vastgoedfonds without obligation. Three short steps and an instant confirmation by email.",
     },
-    thanks: { title: "Thank you for your request", description: "We have received your request." },
-    privacy: { title: "Privacy statement", description: "How Hollands Vastgoedfonds handles your personal data." },
-    cookies: { title: "Cookie statement", description: "Which cookies hollandsvastgoedfonds.com uses." },
-    disclaimer: { title: "Disclaimer", description: "Terms for using this website." },
-    notFound: { title: "Page not found", description: "This page does not exist." },
-    kennisbank: { title: "Knowledge base", description: "Articles about selling property to a direct buyer (in Dutch)." },
-    regions: { title: "Regions", description: "Regions where Hollands Vastgoedfonds buys property (in Dutch)." },
+    thanks: {
+      title: "Thank you for your request",
+      description:
+        "Thank you for your request to Hollands Vastgoedfonds. An acquisition manager will contact you personally about your property and the next steps.",
+    },
+    privacy: {
+      title: "Privacy statement",
+      description:
+        "How Hollands Vastgoedfonds handles your personal data: what we process and why, how long we keep it, who we share it with and what your rights are.",
+    },
+    cookies: {
+      title: "Cookie statement",
+      description:
+        "Which cookies hollandsvastgoedfonds.com uses: no tracking without consent. Our own website statistics work without cookies and without IP addresses.",
+    },
+    disclaimer: {
+      title: "Website disclaimer",
+      description:
+        "Terms for using hollandsvastgoedfonds.com: the information on this website, intellectual property and the fact that this website is not an offer.",
+    },
+    notFound: {
+      title: "Page not found",
+      description:
+        "This page does not exist. Go to the Hollands Vastgoedfonds homepage, see which property we buy or read how our approach to buying property works.",
+    },
+    kennisbank: {
+      title: "Knowledge base",
+      description:
+        "Articles in Dutch about selling let homes, residential portfolios, business premises and inherited property to a direct buyer in the Netherlands.",
+    },
+    regions: {
+      title: "Regions",
+      description:
+        "Hollands Vastgoedfonds buys property throughout the Netherlands, including Amsterdam, Rotterdam, The Hague, Utrecht, Eindhoven, Groningen and Tilburg.",
+    },
   },
 
   nav: {
@@ -727,6 +794,12 @@ const en = {
         },
       ],
       closing: "Capital allocated with discipline. Real estate acquired with conviction.",
+      storyTitle: "How we invest",
+      story: [
+        "Hollands Vastgoedfonds is an independent real estate investment company focused on acquiring, allocating capital to and actively managing residential and commercial property. With a long-term strategy we invest in carefully selected property markets in the Netherlands and beyond.",
+        "Our focus covers single assets as well as large portfolios in the residential, commercial and light-industrial sectors. For each investment period our Investment Committee decides which regions and segments receive new capital, weighing market liquidity, demographic development, the rental market, replacement value and long-term value creation.",
+        "We are not an agent or intermediary. When we buy, we act as the buyer ourselves, within the available mandate. From first analysis and valuation to due diligence, structuring and completion, everything is coordinated in-house. That lets us move quickly when a property fits, without compromising our investment discipline.",
+      ],
     },
     contact: {
       title: "Contact",
@@ -734,6 +807,13 @@ const en = {
       emailLabel: "Email",
       hoursTitle: "Availability",
       hoursText: "Every request is handled personally and we respond on working days. You receive a confirmation email straight away.",
+      helpTitle: "What you can contact us about",
+      help: [
+        { title: "Selling a home", text: "A house or apartment, let or vacant, in any condition." },
+        { title: "Selling a portfolio", text: "Several homes or business premises in one transaction, with one point of contact." },
+        { title: "Commercial property", text: "Offices, shops, business units and logistics property, including leaseback." },
+        { title: "Questions about your situation", text: "Inheritance, stopping as a landlord or a vacant building: we think along without obligation." },
+      ],
     },
     thanks: {
       title: "Thank you. We have received your request.",

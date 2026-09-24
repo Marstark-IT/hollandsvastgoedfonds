@@ -6,11 +6,15 @@ import { t } from "@/data/content";
 import LeadForm from "@/components/forms/LeadForm";
 import { COMPANY, href } from "@/data/site";
 import { o } from "@/data/offer";
+import { x } from "@/data/extra";
+import FaqAccordion from "@/components/sections/FaqAccordion";
+import { faqLd } from "@/lib/seo";
 
 // Dedicated lead page: the full form with a quiet trust column. No other
 // sections, so nothing distracts from finishing the form.
 export default function OfferView({ locale }) {
   const c = o(locale);
+  const faqItems = [...x(locale).faqGroups[1].items, ...x(locale).faqGroups[3].items];
   return (
     <>
       <JsonLd data={breadcrumbLd(locale, [{ key: "offer", label: c.title }])} />
@@ -67,6 +71,8 @@ export default function OfferView({ locale }) {
           </aside>
         </div>
       </section>
+      <FaqAccordion locale={locale} items={faqItems} title={x(locale).faqGroups[1].title} />
+      <JsonLd data={faqLd(faqItems)} />
     </>
   );
 }

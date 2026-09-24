@@ -35,8 +35,21 @@ export default function ContactView({ locale }) {
           </div>
         </div>
       </section>
+      <section className="pb-16 md:pb-24">
+        <div className="wrap">
+          <h2 className="h-section">{p.helpTitle}</h2>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {p.help.map((h) => (
+              <li key={h.title} className="card-fx rounded border border-line bg-white p-7">
+                <h3 className="text-[1.2rem]">{h.title}</h3>
+                <p className="mt-2 text-muted">{h.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
       <NextSteps locale={locale} />
-      <FaqAccordion locale={locale} items={c.faq} limit={4} />
+      <FaqAccordion locale={locale} items={c.faq} limit={6} />
     </>
   );
 }

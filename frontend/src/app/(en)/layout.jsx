@@ -6,7 +6,7 @@ import { baseMetadata, JsonLd, organizationLd, websiteLd } from "@/lib/seo";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: ["400", "500", "700"],
   variable: "--font-sans",
   display: "swap",
 });

@@ -30,7 +30,9 @@ RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
 
 ErrorDocument 404 /niet-gevonden/index.html
 
-<FilesMatch "^_">
+# Private PHP helpers (_crm.php, _mail.php). Only .php: Next.js serves its
+# page payloads as __next.*.txt files, which must stay public.
+<FilesMatch "^_.*\.php$">
   Require all denied
 </FilesMatch>
 

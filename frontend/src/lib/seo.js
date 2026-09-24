@@ -17,7 +17,11 @@ export function buildMeta({ title, description, path, locale, alternates, image 
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: { canonical: path, ...(Object.keys(languages).length > 1 ? { languages } : {}) },
+    alternates: {
+      canonical: path,
+      ...(Object.keys(languages).length > 1 ? { languages } : {}),
+      ...(locale === "nl" ? { types: { "application/rss+xml": [{ url: "/kennisbank/feed.xml", title: "Kennisbank | Hollands Vastgoedfonds" }] } } : {}),
+    },
     openGraph: {
       type,
       url: path,
@@ -48,12 +52,12 @@ export function pageMetadata(key, locale) {
 }
 
 export const articleMetadata = (a) =>
-  buildMeta({ title: a.title, description: a.description, path: articlePath(a.slug), locale: "nl", alternates: { nl: articlePath(a.slug) }, image: a.image === "hero" ? "hero" : a.image, type: "article", published: a.date });
+  buildMeta({ title: a.seoTitle || a.title, description: a.description, path: articlePath(a.slug), locale: "nl", alternates: { nl: articlePath(a.slug) }, image: a.image === "hero" ? "hero" : a.image, type: "article", published: a.date });
 
 export const regionMetadata = (r) =>
   buildMeta({
-    title: `Vastgoed verkopen in ${r.name}`,
-    description: `${r.intro.split(". ")[0]}. Geen makelaar, discreet en snel duidelijkheid.`,
+    title: r.slug === "nijmegen" ? "Vastgoed verkopen Nijmegen-Arnhem" : `Vastgoed verkopen in ${r.name}`,
+    description: `Vastgoed verkopen in ${r.name}? Hollands Vastgoedfonds koopt woningen, portefeuilles en bedrijfspanden direct. Geen makelaar, geen courtage.`,
     path: regionPath(r.slug),
     locale: "nl",
     alternates: { nl: regionPath(r.slug) },

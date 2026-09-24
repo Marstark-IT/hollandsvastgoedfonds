@@ -30,6 +30,14 @@ export default function AboutView({ locale }) {
           ))}
         </div>
       </section>
+      <section className="bg-soft py-20 md:py-28">
+        <div className="wrap max-w-[860px]">
+          <h2 className="h-section">{p.storyTitle}</h2>
+          {p.story.map((para) => (
+            <p key={para.slice(0, 32)} className="mt-6 text-[1.1rem] leading-relaxed text-ink/85">{para}</p>
+          ))}
+        </div>
+      </section>
       <Values locale={locale} />
       <Audiences locale={locale} />
       <section className="relative overflow-hidden">
