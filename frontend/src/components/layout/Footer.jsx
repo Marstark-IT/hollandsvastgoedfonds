@@ -28,11 +28,14 @@ export default function Footer({ locale }) {
     <footer className="bg-brand-dark text-white">
       <div className={`wrap grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-3 ${locale === "nl" ? "xl:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]" : "xl:grid-cols-[1.4fr_1fr_1fr_1fr]"}`}>
         <div className="min-w-0 sm:col-span-2 lg:col-span-3 xl:col-span-1">
-          <Logo light />
+          <Logo light className="h-14 w-auto" />
           <p className="mt-5 max-w-sm text-white/80">{c.footer.text}</p>
-          <a href={COMPANY.emailHref} className="mt-5 inline-flex max-w-full items-center gap-2 break-all font-semibold hover:underline">
-            <EnvelopeSimple size={20} weight="bold" />
-            {COMPANY.email}
+          <a href={COMPANY.emailHref} className="mt-5 inline-flex max-w-full items-start gap-2 font-semibold hover:underline">
+            <EnvelopeSimple size={20} weight="bold" className="mt-1 shrink-0" />
+            <span>
+              {COMPANY.email.split("@")[0]}@<wbr />
+              {COMPANY.email.split("@")[1]}
+            </span>
           </a>
         </div>
         {col(

@@ -50,7 +50,7 @@ export default function Header({ locale }) {
     <header className="sticky top-0 z-50 border-b border-line bg-white">
       <div className="wrap flex h-[76px] items-center justify-between gap-6">
         <Link href={href("home", locale)}>
-          <Logo />
+          <Logo priority />
         </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Hoofdmenu">

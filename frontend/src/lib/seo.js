@@ -74,7 +74,11 @@ export function baseMetadata(locale) {
     category: "real estate",
     manifest: "/site.webmanifest",
     icons: {
-      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico", sizes: "any" }],
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+        { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      ],
       apple: "/apple-touch-icon.png",
     },
     formatDetection: { telephone: false, address: false, email: false },
@@ -91,7 +95,7 @@ export const organizationLd = (locale) => ({
   "@id": `${COMPANY.url}/#organization`,
   name: COMPANY.name,
   url: COMPANY.url,
-  logo: { "@type": "ImageObject", url: `${COMPANY.url}/logo.png`, width: 362, height: 132 },
+  logo: { "@type": "ImageObject", url: `${COMPANY.url}/logo.png`, width: 600, height: 188 },
   image: `${COMPANY.url}/og/hero-wide.jpg`,
   email: COMPANY.email,
   description: t(locale).meta.home.description,
