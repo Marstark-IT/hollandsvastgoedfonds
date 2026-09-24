@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base size is 18px: the audience is mostly 50+. */
+@layer base {
+  html {
+    font-size: 18px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink antialiased;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    @apply text-brand font-bold;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid #C75B0B;
+    outline-offset: 2px;
+  }
+  [id] { scroll-margin-top: 110px; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-site px-5 md:px-8; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded bg-accent px-6 py-3.5 text-[1rem] font-bold text-white transition-colors duration-200 hover:bg-accent-hover active:translate-y-px whitespace-nowrap;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded border-2 border-brand px-6 py-3 text-[1rem] font-bold text-brand transition-colors duration-200 hover:bg-brand hover:text-white whitespace-nowrap;
+  }
+  .field {
+    @apply block w-full rounded border border-line bg-white px-4 py-3.5 text-[1rem] text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25;
+  }
+  .label { @apply mb-1.5 block text-[0.95rem] font-semibold text-ink; }
+  .h-section { @apply text-[1.9rem] md:text-[2.3rem]; }
+  .prose-legal h2 { @apply mt-10 text-[1.4rem]; }
+  .prose-legal p { @apply mt-3 text-muted; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

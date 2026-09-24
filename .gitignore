@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+.env*
+*.log
+.DS_Store
+# local tooling / raw image generations
+.mcp.json
+assets-gen/

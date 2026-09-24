@@ -1,0 +1,73 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      DOCROOT: domains/hollandsvastgoedfonds.com/public_html
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Check build output
+        run: |
+          test -f out/index.html
+          test -f out/en/index.html
+          test -f out/.htaccess
+          test -f out/api/lead.php
+          test -f out/sitemap.xml
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      # Only this domain's docroot is touched: the hosting account is shared
+      # with other sites. Leads live in ~/hollands_data, outside the docroot.
+      - name: Upload site
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          SSH="ssh -i $HOME/.ssh/deploy -p $SSH_PORT -o IdentitiesOnly=yes"
+          $SSH "$SSH_USER@$SSH_HOST" "mkdir -p ~/hollands_data && chmod 700 ~/hollands_data && test -d ~/$DOCROOT"
+          rsync -az --delete --delay-updates -e "$SSH" out/ "$SSH_USER@$SSH_HOST:$DOCROOT/"
+
+      - name: Smoke test
+        working-directory: .
+        run: |
+          sleep 5
+          for p in / /en/ /werkwijze/ /wat-wij-kopen/woningen/ /sitemap.xml; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://hollandsvastgoedfonds.com$p")
+            echo "$p -> $code"
+            [ "$code" = "200" ] || exit 1
+          done
+          curl -s https://hollandsvastgoedfonds.com/ | grep -q "Hollands Vastgoedfonds"
+          echo "::notice::LIVE at https://hollandsvastgoedfonds.com/"
