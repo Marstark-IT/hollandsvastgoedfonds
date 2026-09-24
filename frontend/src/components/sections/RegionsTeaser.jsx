@@ -17,9 +17,9 @@ export default function RegionsTeaser({ locale, exclude }) {
             <li key={g.slug}>
               <Link
                 href={regionPath(g.slug)}
-                className="flex items-center gap-3 rounded border border-line bg-white px-5 py-4 font-semibold text-brand transition-colors hover:border-band hover:bg-soft"
+                className="card-fx group flex items-center gap-3 rounded border border-line bg-white px-5 py-4 font-semibold text-brand"
               >
-                <MapPin size={24} weight="fill" className="shrink-0 text-accent" />
+                <MapPin size={24} weight="fill" className="shrink-0 text-accent transition-transform duration-300 group-hover:-translate-y-0.5" />
                 {g.name}
               </Link>
             </li>

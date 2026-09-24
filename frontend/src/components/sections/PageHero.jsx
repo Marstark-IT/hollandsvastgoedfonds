@@ -19,7 +19,7 @@ export default function PageHero({ locale, image, imageAlt, title, text, trail }
         </div>
       )}
       <div className={`wrap relative ${image ? "pb-12 lg:py-24" : "py-14 md:py-20"}`}>
-        <div className={`max-w-[720px] rounded bg-white p-7 sm:p-10 ${image ? "-mt-14 shadow-card lg:mt-0" : ""}`}>
+        <div className={`rise max-w-[720px] rounded bg-white p-7 sm:p-10 ${image ? "-mt-14 shadow-card lg:mt-0" : ""}`}>
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-1.5 text-[0.9rem] text-muted">
               <li>

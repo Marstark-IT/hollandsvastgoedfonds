@@ -23,9 +23,9 @@ export default function KennisbankView({ locale = "nl" }) {
       />
       <section className="py-16 md:py-24">
         <div className="wrap">
-          <Link href={articlePath(first.slug)} className="group grid overflow-hidden rounded border border-line md:grid-cols-2">
+          <Link href={articlePath(first.slug)} className="card-fx group grid overflow-hidden rounded border border-line bg-white md:grid-cols-2">
             <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[360px]">
-              <Image src={IMAGES[first.image]} alt="" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <Image src={IMAGES[first.image]} alt="" fill sizes="(min-width:768px) 50vw, 100vw" className="fx-zoom object-cover" />
             </div>
             <div className="flex flex-col justify-center p-8 md:p-12">
               <p className="text-[0.9rem] font-semibold text-muted">{first.minutes} {read}</p>
@@ -35,10 +35,10 @@ export default function KennisbankView({ locale = "nl" }) {
           </Link>
           <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((a) => (
-              <li key={a.slug}>
-                <Link href={articlePath(a.slug)} className="group flex h-full flex-col overflow-hidden rounded border border-line bg-white">
+              <li key={a.slug} className="flex">
+                <Link href={articlePath(a.slug)} className="card-fx group flex w-full flex-col overflow-hidden rounded border border-line bg-white">
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image src={IMAGES[a.image]} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+                    <Image src={IMAGES[a.image]} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="fx-zoom object-cover" />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <p className="text-[0.85rem] font-semibold text-muted">{a.minutes} {read}</p>

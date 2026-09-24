@@ -51,7 +51,140 @@
   .prose-legal p { @apply mt-3 text-muted; }
 }
 
+/* ---------- Interactive boxes ----------
+   .card-fx on any box: lifts, gets a tinted shadow and an accent border that
+   draws itself (top -> right -> bottom -> left) via two pseudo-elements.
+   Size never changes on hover, so rows keep equal heights.
+   .fx-icon  icon tile that fills with the brand colour
+   .fx-mark  large faint watermark that slides in
+   .fx-cta   text link that turns into a pill button
+   .fx-zoom  image that zooms slightly */
+@layer components {
+  .card-fx {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+  }
+  .card-fx::before,
+  .card-fx::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: width 0.15s ease-in, height 0.15s ease-in, border-color 0s 0.15s;
+  }
+  .card-fx::before { top: 0; left: 0; }
+  .card-fx::after { bottom: 0; right: 0; }
+  .card-fx:hover,
+  .card-fx:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 44px -20px rgba(15, 59, 95, 0.5);
+  }
+  .card-fx:hover::before,
+  .card-fx:focus-visible::before {
+    width: 100%;
+    height: 100%;
+    border-top-color: #B45208;
+    border-right-color: #B45208;
+    transition: width 0.22s ease-out, height 0.22s ease-out 0.22s;
+  }
+  .card-fx:hover::after,
+  .card-fx:focus-visible::after {
+    width: 100%;
+    height: 100%;
+    border-bottom-color: #B45208;
+    border-left-color: #B45208;
+    transition: border-color 0s 0.44s, width 0.22s ease-out 0.44s, height 0.22s ease-out 0.66s;
+  }
+  .fx-icon {
+    @apply flex h-16 w-16 shrink-0 items-center justify-center rounded bg-band/10 text-band;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .fx-icon > svg { transition: transform 0.3s ease; }
+  .card-fx:hover .fx-icon,
+  .card-fx:focus-visible .fx-icon { @apply bg-band text-white; }
+  .card-fx:hover .fx-icon > svg { transform: scale(1.1); }
+  .fx-mark {
+    position: absolute;
+    right: -2rem;
+    bottom: -2.5rem;
+    z-index: 0;
+    opacity: 0;
+    color: #1F5F86;
+    pointer-events: none;
+    transform: translate(1.5rem, 1.5rem) rotate(12deg);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .card-fx:hover .fx-mark,
+  .card-fx:focus-visible .fx-mark { opacity: 0.07; transform: none; }
+  .fx-cta {
+    @apply inline-flex items-center gap-2 self-start rounded py-2 font-bold text-accent;
+    transition: background-color 0.3s ease, color 0.3s ease, padding 0.3s ease;
+  }
+  .fx-cta > svg { transition: transform 0.3s ease; }
+  .card-fx:hover .fx-cta,
+  .card-fx:focus-visible .fx-cta { @apply bg-accent px-4 text-white; }
+  .card-fx:hover .fx-cta > svg { transform: translateX(4px); }
+  .fx-zoom { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .card-fx:hover .fx-zoom { transform: scale(1.05); }
+}
+
+/* ---------- Flip cards (process steps) ----------
+   Front and back sit in the same grid cell, so the card is as tall as its
+   largest face and all cards in a row are equal. Hover, focus or tap flips. */
+.flip-card { perspective: 1400px; outline: none; }
+.flip-inner {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.flip-face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 290px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back { transform: rotateY(180deg); justify-content: center; }
+.flip-card:hover .flip-inner,
+.flip-card:focus .flip-inner,
+.flip-card:focus-within .flip-inner { transform: rotateY(180deg); }
+.flip-card:focus-visible .flip-face { box-shadow: 0 0 0 4px rgba(180, 82, 8, 0.45); }
+
+/* ---------- Scroll reveal ----------
+   components/ui/ScrollReveal.jsx marks elements below the fold with
+   [data-reveal] and adds .is-in when they scroll into view. Without JS nothing
+   is hidden. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Page-load entrance for hero and page headers. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.rise-2 { animation-delay: 0.12s; }
+.rise-3 { animation-delay: 0.24s; }
+
 @media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .rise { animation: none; }
+  .card-fx, .card-fx::before, .card-fx::after, .fx-mark, .fx-zoom { transition: none !important; }
+  .card-fx:hover { transform: none; }
+  .flip-inner, .flip-card:hover .flip-inner, .flip-card:focus .flip-inner, .flip-card:focus-within .flip-inner { transition: none; transform: none; }
+  .flip-back { transform: none; opacity: 0; transition: opacity 0.2s; }
+  .flip-card:hover .flip-back, .flip-card:focus .flip-back { opacity: 1; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }

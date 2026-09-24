@@ -13,10 +13,13 @@ export default function Criteria({ locale }) {
           {c.items.map((it, i) => {
             const Icon = ICONS[i];
             return (
-              <li key={it.title} className="rounded bg-white p-7">
-                <Icon size={38} weight="light" className="text-band" />
-                <h3 className="mt-5 text-[1.3rem]">{it.title}</h3>
-                <p className="mt-2 text-muted">{it.text}</p>
+              <li key={it.title} className="card-fx overflow-hidden rounded bg-white p-7 hyphens-auto">
+                <Icon aria-hidden="true" size={150} weight="thin" className="fx-mark" />
+                <span className="fx-icon relative">
+                  <Icon size={34} weight="light" />
+                </span>
+                <h3 className="relative mt-5 text-[1.3rem]">{it.title}</h3>
+                <p className="relative mt-2 text-muted">{it.text}</p>
               </li>
             );
           })}

@@ -19,18 +19,18 @@ export default function SegmentGrid({ locale, keys = KEYS, heading = true, as: H
               <Link
                 key={k}
                 href={href(k, locale)}
-                className="group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded"
+                className="card-fx group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded"
               >
                 <Image
                   src={IMAGES[k]}
                   alt={s.imageAlt}
                   fill
                   sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="fx-zoom object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/55 to-brand-dark/10" />
-                <div className="relative p-7 text-white">
-                  <H className="text-[1.45rem] font-bold text-white">{s.title}</H>
+                <div className="relative p-7 text-white hyphens-auto lg:p-6 xl:p-7">
+                  <H className="text-[1.45rem] font-bold text-white lg:text-[1.3rem] xl:text-[1.4rem]">{s.title}</H>
                   <p className="mt-2 text-white/90">{s.short}</p>
                   <span className="btn mt-5 px-5 py-2.5 text-[0.95rem]">{c.more}</span>
                 </div>

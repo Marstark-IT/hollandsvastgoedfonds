@@ -13,10 +13,13 @@ export default function Audiences({ locale }) {
           {a.items.map((it, i) => {
             const Icon = ICONS[i];
             return (
-              <li key={it.title} className="rounded bg-soft p-6">
-                <Icon size={36} weight="light" className="text-band" />
-                <h3 className="mt-4 text-[1.15rem]">{it.title}</h3>
-                <p className="mt-2 text-[0.98rem] text-muted">{it.text}</p>
+              <li key={it.title} className="card-fx overflow-hidden rounded bg-soft p-6 hyphens-auto">
+                <Icon aria-hidden="true" size={140} weight="thin" className="fx-mark" />
+                <span className="fx-icon relative h-14 w-14">
+                  <Icon size={30} weight="light" />
+                </span>
+                <h3 className="relative mt-4 text-[1.15rem]">{it.title}</h3>
+                <p className="relative mt-2 text-[0.98rem] text-muted">{it.text}</p>
               </li>
             );
           })}

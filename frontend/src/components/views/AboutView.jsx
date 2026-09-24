@@ -23,7 +23,7 @@ export default function AboutView({ locale }) {
       <section className="py-20 md:py-28">
         <div className="wrap grid gap-12 md:grid-cols-3">
           {p.blocks.map((b) => (
-            <div key={b.title} className="border-t-4 border-accent pt-7">
+            <div key={b.title} className="card-fx rounded border border-line border-t-4 border-t-accent bg-white p-8">
               <h2 className="text-[1.5rem]">{b.title}</h2>
               <p className="mt-4 text-[1.08rem] text-muted">{b.text}</p>
             </div>

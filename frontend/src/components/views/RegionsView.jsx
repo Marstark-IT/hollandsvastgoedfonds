@@ -23,8 +23,8 @@ export default function RegionsView({ locale = "nl" }) {
         <ul className="wrap grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {REGIONS.map((r) => (
             <li key={r.slug}>
-              <Link href={regionPath(r.slug)} className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden rounded">
-                <Image src={IMAGES[r.image]} alt="" fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.05]" />
+              <Link href={regionPath(r.slug)} className="card-fx group relative flex min-h-[260px] flex-col justify-end overflow-hidden rounded">
+                <Image src={IMAGES[r.image]} alt="" fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="fx-zoom object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/40 to-transparent" />
                 <div className="relative p-6 text-white">
                   <p className="text-[0.85rem] font-semibold text-white/80">{r.province}</p>

@@ -42,8 +42,10 @@ export default function ApproachView({ locale }) {
           <p className="mt-6 max-w-[60ch] text-[1.1rem] text-muted">{p.deployText}</p>
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {p.deployList.map((item) => (
-              <li key={item} className="flex items-center gap-4 rounded bg-white p-6 text-[1.1rem] font-semibold">
-                <CheckCircle size={30} weight="fill" className="shrink-0 text-band" />
+              <li key={item} className="card-fx flex items-center gap-4 rounded bg-white p-6 text-[1.1rem] font-semibold">
+                <span className="fx-icon h-12 w-12">
+                  <CheckCircle size={26} weight="fill" />
+                </span>
                 <span className="min-w-0">{item}</span>
               </li>
             ))}

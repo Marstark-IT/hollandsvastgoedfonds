@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Analytics from "@/components/analytics/Analytics";
 import CookieConsent from "@/components/ui/CookieConsent";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { t } from "@/data/content";
 
 // Persistent chrome around every page. Server component: no client JS beyond
@@ -21,6 +22,7 @@ export default function Shell({ locale, children }) {
       <main id="inhoud">{children}</main>
       <Footer locale={locale} />
       <Analytics />
+      <ScrollReveal />
       <CookieConsent locale={locale} />
     </>
   );

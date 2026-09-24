@@ -94,7 +94,7 @@ const nl = {
   hero: {
     title: "Wij kopen uw vastgoed. Direct en voor eigen rekening.",
     text: "Geen makelaar, geen openbare verkoop. U spreekt rechtstreeks met de koper.",
-    imageAlt: "Grachtenpanden met trapgevels aan een Hollandse gracht",
+    imageAlt: "Hollandse waterkant met grachtenpanden, een modern kantoorgebouw, bedrijfshallen en een molen",
   },
 
   facts: [
@@ -520,7 +520,7 @@ const en = {
   hero: {
     title: "We buy your property. Directly and for our own account.",
     text: "No agent, no public sale. You deal directly with the buyer.",
-    imageAlt: "Canal houses with stepped gables along a Dutch canal",
+    imageAlt: "Dutch waterfront with canal houses, a modern office building, business halls and a windmill",
   },
 
   facts: [
