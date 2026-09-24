@@ -18,7 +18,7 @@ A stranger cannot read your leads, break into the server through the site, or pl
 | 4 | The site revealed its PHP version. The leads database could be read by other programs on the account. A PHP error log would have been publicly downloadable. | Low | Yes |
 | 5 | The deploy pipeline trusted the server's identity on every run, used movable action versions and had no explicit permissions. | Low | Yes. The server key and action versions are pinned, and the pipeline has read-only permissions. |
 
-**Already safe (tested):** only ports 80 and 443 are open. TLS is 1.2/1.3 only with a valid certificate until 22 Dec 2026. All security headers are present, including a CSP that blocks injected loaders. The form rejects cross-site submissions, SQL injection and bad input. The leads database is outside the website folder. No passwords or keys appear anywhere in the git history. All 100 dependencies have 0 known vulnerabilities and verified signatures. Every browser gets the same bytes, so there is no hidden malware.
+**Already safe (tested):** only ports 80 and 443 are open. TLS is 1.2/1.3 only with a valid certificate until 22 Dec 2026. All security headers are present, including a CSP that blocks injected loaders. The form rejects cross-site submissions, SQL injection and bad input. The leads database is outside the website folder. No passwords or keys appear anywhere in the git history. All 100 dependencies have 0 known vulnerabilities and verified signatures. Every browser gets the same bytes, so there is no hidden malware. The new dashboard (`/api/stats.php`) needs the export password, escapes everything it shows, and ignores status changes sent from other websites. We re-tested this after the production deploy.
 
 ## Still needs you
 
@@ -26,7 +26,7 @@ A stranger cannot read your leads, break into the server through the site, or pl
 2. **Shared account:** four WordPress sites (klaverhorst, levenlily, marstark, tamzidmolla) run as the same user as this site. If one WordPress plugin is hacked, the attacker can read the Hollands leads. For seller data, a separate hosting account is the right fix. At minimum, keep those WordPress sites and plugins updated.
 3. **Email spoofing:** DMARC is `p=none`, so anyone can send email that looks like it came from `hello@hollandsvastgoedfonds.com`. Once legitimate mail is confirmed to pass, raise it to `p=quarantine` in Hostinger DNS. Also add a CAA record (`0 issue "letsencrypt.org"`).
 4. **Branch protection** on GitHub needs a paid plan. Four people have read access to the repo. That is fine, because there are no secrets in the repo.
-5. **Your uncommitted work** (new pages, tracking, confirmation email) already contains the fixes, but it is not deployed. The live site runs the previous code with the fixes applied.
+5. The production deploy (commits b942f33, fb5c322) keeps every fix, re-tested live. One "SECURITY TEST" notification email reached hello@ on 24 Sep at 02:28 UTC. It came from our testing and can be deleted.
 
 ## Notes (not headline issues)
 
