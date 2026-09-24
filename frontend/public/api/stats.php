@@ -1,6 +1,8 @@
 <?php
 // Operations dashboard: traffic, sources, conversion and the lead list with a
-// status per lead. Access: /api/stats.php?key=<export_key from config.php>
+// status per lead. Access: https://hollandsvastgoedfonds.com/api/stats.php
+// The browser asks for a login: any username, password = export_key from
+// config.php (HTTP Basic, same as leads.php, so the key never sits in a URL).
 declare(strict_types=1);
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: no-store');
@@ -9,8 +11,16 @@ header("Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; 
 $dataDir = dirname(__DIR__, 4) . '/hollands_data';
 $cfg = is_file($dataDir . '/config.php') ? (array)(include $dataDir . '/config.php') : [];
 $key = (string)($cfg['export_key'] ?? '');
-$given = (string)($_GET['key'] ?? $_POST['key'] ?? '');
-if ($key === '' || !hash_equals($key, $given)) { http_response_code(404); exit; }
+$given = (string)($_SERVER['PHP_AUTH_PW'] ?? '');
+$auth = (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '');
+if ($given === '' && stripos($auth, 'basic ') === 0) {
+    $given = explode(':', (string)base64_decode(substr($auth, 6)), 2)[1] ?? '';
+}
+if ($key === '' || !hash_equals($key, $given)) {
+    header('WWW-Authenticate: Basic realm="Hollands dashboard", charset="UTF-8"');
+    http_response_code(401);
+    exit;
+}
 
 $h = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 $days = in_array((int)($_GET['d'] ?? 30), [7, 30, 90, 365], true) ? (int)$_GET['d'] : 30;
@@ -25,9 +35,10 @@ if ($leadsDb) {
         if (!in_array($c, $cols, true)) $leadsDb->exec("ALTER TABLE leads ADD COLUMN $c TEXT");
     }
 }
-if ($leadsDb && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['id'], $_POST['status']) && in_array($_POST['status'], $statuses, true)) {
+$sameOrigin = strcasecmp((string)parse_url((string)($_SERVER['HTTP_ORIGIN'] ?? ''), PHP_URL_HOST), preg_replace('/:\d+$/', '', (string)($_SERVER['HTTP_HOST'] ?? ''))) === 0;
+if ($leadsDb && $sameOrigin && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['id'], $_POST['status']) && in_array($_POST['status'], $statuses, true)) {
     $leadsDb->prepare('UPDATE leads SET status = ? WHERE id = ?')->execute([$_POST['status'], (int)$_POST['id']]);
-    header('Location: stats.php?key=' . urlencode($given) . '&d=' . $days . '#leads');
+    header('Location: stats.php?d=' . $days . '#leads');
     exit;
 }
 
@@ -57,7 +68,6 @@ $bySource = $q($leadsDb, "SELECT CASE WHEN utm_source<>'' THEN utm_source WHEN g
 $byType = $q($leadsDb, "SELECT type, COUNT(*) n FROM leads WHERE substr(created_at,1,10) >= ? GROUP BY type ORDER BY n DESC", [$since]);
 $list = $q($leadsDb, "SELECT id, created_at, type, location, name, email, phone, message, locale, source, status, utm_source, utm_campaign, gclid, fbclid, referrer, landing_page FROM leads ORDER BY id DESC LIMIT 100");
 
-$k = urlencode($given);
 ?><!doctype html>
 <html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Dashboard | Hollands Vastgoedfonds</title>
@@ -75,8 +85,8 @@ td,th{padding:7px 8px;border-bottom:1px solid #E4E8EB;text-align:left;vertical-a
 .muted{color:#4A5561;font-size:13px}.pill{display:inline-block;padding:1px 8px;border-radius:99px;background:#E8F0F6;font-size:12px}
 </style></head><body>
 <header><strong>Hollands Vastgoedfonds · Dashboard</strong>
-<nav>Periode: <?php foreach ([7, 30, 90, 365] as $d): ?><a href="?key=<?= $k ?>&d=<?= $d ?>"<?= $d === $days ? ' style="font-weight:700;text-decoration:none"' : '' ?>><?= $d ?>d</a><?php endforeach ?>
- · <a href="leads.php?key=<?= $k ?>">CSV export</a></nav></header>
+<nav>Periode: <?php foreach ([7, 30, 90, 365] as $d): ?><a href="?d=<?= $d ?>"<?= $d === $days ? ' style="font-weight:700;text-decoration:none"' : '' ?>><?= $d ?>d</a><?php endforeach ?>
+ · <a href="leads.php">CSV export</a></nav></header>
 <main>
 <section class="kpis">
 <div class="card kpi"><b><?= $visits ?></b><span>Bezoeken</span></div>
@@ -109,7 +119,7 @@ td,th{padding:7px 8px;border-bottom:1px solid #E4E8EB;text-align:left;vertical-a
 <td><?= $h($r['name']) ?><?php if ($r['message']): ?><div class="muted"><?= nl2br($h($r['message'])) ?></div><?php endif ?></td>
 <td><a href="mailto:<?= $h($r['email']) ?>"><?= $h($r['email']) ?></a><br><a href="tel:<?= $h(preg_replace('/[^+\d]/', '', (string)$r['phone'])) ?>"><?= $h($r['phone']) ?></a></td>
 <td><span class="pill"><?= $h($src) ?></span><?php if ($r['utm_campaign']): ?><div class="muted"><?= $h($r['utm_campaign']) ?></div><?php endif ?><div class="muted"><?= $h($r['source']) ?> · <?= $h($r['locale']) ?></div></td>
-<td><form method="post" action="stats.php?d=<?= $days ?>"><input type="hidden" name="key" value="<?= $h($given) ?>"><input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
+<td><form method="post" action="stats.php?d=<?= $days ?>"><input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
 <select name="status"><?php foreach ($statuses as $st): ?><option<?= ($r['status'] ?: 'nieuw') === $st ? ' selected' : '' ?>><?= $st ?></option><?php endforeach ?></select> <button>OK</button></form></td></tr>
 <?php endforeach ?></table><?php if (!$list): ?><p class="muted">Nog geen aanvragen.</p><?php endif ?></div></section>
 <p class="muted">Bezoekersdata zonder cookies of IP-adressen. Gegevens staan buiten de webroot in ~/hollands_data.</p>
