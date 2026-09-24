@@ -164,18 +164,27 @@ function api_body(): array {
 
 // ---------- Webhooks ----------
 
-// Refuse webhook targets that resolve to private, loopback or link-local
-// addresses (SSRF protection); https only.
-function crm_valid_webhook_url(string $url): ?string {
+// Refuse webhook targets that are not https on port 443 or that resolve to
+// private, loopback or link-local addresses (SSRF protection). Returns the
+// validated IPv4 so the actual request can be pinned to it (no DNS rebinding
+// between check and connect, no IPv6 path around the check).
+function crm_check_webhook_url(string $url): array {
     $p = parse_url($url);
-    if (!$p || ($p['scheme'] ?? '') !== 'https' || empty($p['host'])) return 'URL must start with https://';
-    if (isset($p['user']) || isset($p['pass'])) return 'Credentials in the URL are not allowed.';
+    if (!$p || ($p['scheme'] ?? '') !== 'https' || empty($p['host'])) return [null, 'URL must start with https://'];
+    if (isset($p['user']) || isset($p['pass'])) return [null, 'Credentials in the URL are not allowed.'];
+    if (isset($p['port']) && (int)$p['port'] !== 443) return [null, 'Only the default HTTPS port (443) is allowed.'];
     $ips = @gethostbynamel($p['host']) ?: [];
-    if (!$ips) return 'Host does not resolve.';
+    if (!$ips) return [null, 'Host does not resolve.'];
     foreach ($ips as $ip) {
-        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) return 'Host resolves to a private or reserved address.';
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return [null, 'Host resolves to a private or reserved address.'];
+        }
     }
-    return null;
+    return [['host' => $p['host'], 'ip' => $ips[0]], null];
+}
+
+function crm_valid_webhook_url(string $url): ?string {
+    return crm_check_webhook_url($url)[1];
 }
 
 // Signature header: t=<unix time>,v1=<hex HMAC-SHA256 of "<t>.<raw body>">.
@@ -187,7 +196,8 @@ function crm_sign(string $body, int $ts): string {
 function crm_post(string $event, array $data, ?string $url = null): array {
     $url = $url ?? (string)(crm_settings()['webhook_url'] ?? '');
     if ($url === '') return [false, 'no webhook_url configured'];
-    if ($why = crm_valid_webhook_url($url)) return [false, $why];
+    [$target, $why] = crm_check_webhook_url($url);
+    if ($why) return [false, $why];
     $delivery = bin2hex(random_bytes(16));
     $body = json_encode(['event' => $event, 'delivery_id' => $delivery, 'sent_at' => crm_now(), 'data' => $data],
         JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -201,6 +211,8 @@ function crm_post(string $event, array $data, ?string $url = null): array {
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_TIMEOUT => 10,
         CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+        CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+        CURLOPT_RESOLVE => [$target['host'] . ':443:' . $target['ip']],
         CURLOPT_HTTPHEADER => [
             'Content-Type: application/json',
             'User-Agent: HollandsVastgoedfonds-Webhooks/1.0',
