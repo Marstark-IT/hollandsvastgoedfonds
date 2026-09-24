@@ -186,7 +186,7 @@ export default function OfferForm({ locale }) {
           </fieldset>
 
           <div>
-            <label htmlFor={`${id}-address`} className="label">{c.f.address}{opt()}</label>
+            <label htmlFor={`${id}-address`} className="label">{c.f.address} {opt()}</label>
             <input id={`${id}-address`} className="field" value={v.address} onChange={set("address")} autoComplete="street-address" />
           </div>
           <div className="grid gap-4 sm:grid-cols-[1fr_1.4fr]">
@@ -209,13 +209,13 @@ export default function OfferForm({ locale }) {
 
           {v.type === "portefeuille" && (
             <div>
-              <label htmlFor={`${id}-units`} className="label">{c.f.units}{opt()}</label>
+              <label htmlFor={`${id}-units`} className="label">{c.f.units} {opt()}</label>
               <input id={`${id}-units`} type="number" min="1" max="9999" inputMode="numeric" className="field max-w-[200px]" value={v.units} onChange={set("units")} />
             </div>
           )}
 
           <fieldset>
-            <legend className="label">{c.f.condition}{opt()}</legend>
+            <legend className="label">{c.f.condition} {opt()}</legend>
             <Pills name="condition" options={c.f.conditionOpts} cols="grid-cols-2 sm:grid-cols-4" />
           </fieldset>
 
@@ -234,11 +234,11 @@ export default function OfferForm({ locale }) {
             {err("timeframe")}
           </fieldset>
           <div>
-            <label htmlFor={`${id}-price`} className="label">{c.f.price}{opt()}</label>
+            <label htmlFor={`${id}-price`} className="label">{c.f.price} {opt()}</label>
             <input id={`${id}-price`} className="field max-w-[320px]" value={v.price} onChange={set("price")} inputMode="text" />
           </div>
           <div>
-            <label htmlFor={`${id}-message`} className="label">{c.f.message}{opt()}</label>
+            <label htmlFor={`${id}-message`} className="label">{c.f.message} {opt()}</label>
             <textarea id={`${id}-message`} rows={4} className="field resize-y" value={v.message} onChange={set("message")} />
           </div>
           <div className="flex flex-wrap items-center gap-3">
