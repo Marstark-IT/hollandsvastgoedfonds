@@ -39,6 +39,13 @@ ErrorDocument 404 /niet-gevonden/index.html
   Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.nl https://*.gstatic.com https://www.facebook.com https://*.clarity.ms https://c.bing.com; font-src 'self' data:; style-src 'self' 'unsafe-inline' https://tagmanager.google.com; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://*.clarity.ms https://bat.bing.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.nl https://www.facebook.com https://*.clarity.ms https://bat.bing.com; frame-src https://www.googletagmanager.com https://td.doubleclick.net https://bid.g.doubleclick.net https://www.facebook.com; upgrade-insecure-requests"
 </IfModule>
 
+# The dashboard renders no scripts: keep it on its own strict policy instead of
+# the site-wide one above (which trusts the GTM hosts).
+<Files "stats.php">
+  Header always set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
+</Files>
+
+
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType text/html "access plus 0 seconds"
