@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { JsonLd, breadcrumbLd } from "@/lib/seo";
 import { t } from "@/data/content";
-import OfferForm from "@/components/forms/OfferForm";
+import LeadForm from "@/components/forms/LeadForm";
 import { COMPANY, href } from "@/data/site";
 import { o } from "@/data/offer";
 
@@ -25,7 +25,7 @@ export default function OfferView({ locale }) {
             </nav>
             <h1 className="rise mt-4 text-[2rem] leading-tight md:text-[2.6rem]">{c.title}</h1>
             <p className="rise rise-2 mb-8 mt-3 text-[1.15rem] text-muted">{c.text}</p>
-            <OfferForm locale={locale} />
+            <LeadForm locale={locale} source="offer-page" variant="page" />
           </div>
           <aside className="space-y-5 lg:sticky lg:top-28 lg:mt-[7.5rem]">
             <div className="rounded bg-white p-7">

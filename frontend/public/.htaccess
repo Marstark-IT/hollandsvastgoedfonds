@@ -3,6 +3,17 @@ Options -Indexes
 DirectoryIndex index.html index.php
 
 RewriteEngine On
+
+# Pass the Authorization header through to PHP (Bearer auth for /api/v1).
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# CRM API v1 routes.
+RewriteRule ^api/v1/leads/?$ api/v1/leads.php [L,QSA]
+RewriteRule ^api/v1/leads/([0-9]+)/?$ api/v1/leads.php?id=$1 [L,QSA]
+RewriteRule ^api/v1/webhook/?$ api/v1/webhook.php [L,QSA]
+RewriteRule ^api/v1/webhook/(test|redeliver)/?$ api/v1/webhook.php?action=$1 [L,QSA]
+RewriteRule ^api/v1/health/?$ api/v1/health.php [L,QSA]
 # HTTPS and apex domain.
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
@@ -18,6 +29,10 @@ RewriteCond %{REQUEST_FILENAME}/index.html -f
 RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
 
 ErrorDocument 404 /niet-gevonden/index.html
+
+<FilesMatch "^_">
+  Require all denied
+</FilesMatch>
 
 <FilesMatch "^\.(?!well-known)">
   Require all denied

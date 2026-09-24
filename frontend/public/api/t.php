@@ -46,3 +46,9 @@ try {
     error_log('[t] ' . $ex->getMessage());
 }
 http_response_code(204);
+
+// Piggy-back on site traffic to retry CRM webhook deliveries (no cron on this
+// host). Runs after the response is sent, at most once a minute.
+require __DIR__ . '/_crm.php';
+crm_finish_response();
+crm_retry_pending();

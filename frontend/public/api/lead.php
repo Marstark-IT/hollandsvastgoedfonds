@@ -8,6 +8,7 @@
 // ['notify_to' => ..., 'mail_from' => ..., 'export_key' => ...].
 
 declare(strict_types=1);
+require __DIR__ . '/_crm.php';
 header_remove('X-Powered-By');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -121,6 +122,10 @@ try {
     $ins->execute($vals);
     $isNew = $ins->rowCount() === 1;
     $leadId = (int)$db->lastInsertId();
+    if ($isNew) {
+        crm_migrate($db);
+        $db->prepare("UPDATE leads SET updated_at = ?, webhook_status = 'pending', webhook_attempts = 0 WHERE id = ?")->execute([crm_now(), $leadId]);
+    }
 } catch (Throwable $e) {
     error_log('[lead] db: ' . $e->getMessage());
     out(500, ['ok' => false, 'error' => 'storage']);
@@ -196,4 +201,16 @@ if ($isNew) {
     if ($sendConfirmation) @mail($replyTo, $enc($subj), $txt, $h2, '-f' . $mailFrom);
 }
 
-out(200, ['ok' => true]);
+// Reply to the visitor first, then push the lead to the CRM webhook (and retry
+// anything still pending) without making the form wait.
+http_response_code(200);
+echo json_encode(['ok' => true]);
+if ($isNew) {
+    crm_finish_response();
+    try {
+        crm_deliver($db, $leadId);
+    } catch (Throwable $e) {
+        error_log('[lead] crm: ' . $e->getMessage());
+    }
+    crm_retry_pending();
+}
