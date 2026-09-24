@@ -19,7 +19,7 @@ export default function OfferView({ locale }) {
     <>
       <JsonLd data={breadcrumbLd(locale, [{ key: "offer", label: c.title }])} />
       <section className="bg-soft pb-16 pt-8 md:pb-24 md:pt-12">
-        <div className="wrap grid items-start gap-10 lg:grid-cols-[1fr_360px] lg:gap-12">
+        <div className="wrap grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
           <div className="min-w-0">
             <nav aria-label="Breadcrumb">
               <ol className="flex items-center gap-1.5 text-[0.9rem] text-muted">
@@ -31,7 +31,7 @@ export default function OfferView({ locale }) {
             <p className="rise rise-2 mb-8 mt-3 text-[1.15rem] text-muted">{c.text}</p>
             <LeadForm locale={locale} source="offer-page" variant="page" />
           </div>
-          <aside className="space-y-5 lg:sticky lg:top-28 lg:mt-[7.5rem]">
+          <aside className="min-w-0 space-y-5 lg:sticky lg:top-28 lg:mt-[7.5rem]">
             <div className="rounded bg-white p-7">
               <h2 className="text-[1.25rem]">{c.aside.title}</h2>
               <ul className="mt-5 space-y-3.5">
