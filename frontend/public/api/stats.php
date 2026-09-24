@@ -31,7 +31,7 @@ $leadsDb = is_file($dataDir . '/leads.sqlite') ? new PDO('sqlite:' . $dataDir . 
 if ($leadsDb) {
     $cols = array_column($leadsDb->query('PRAGMA table_info(leads)')->fetchAll(PDO::FETCH_ASSOC), 'name');
     if (!in_array('status', $cols, true)) $leadsDb->exec('ALTER TABLE leads ADD COLUMN status TEXT');
-    foreach (['utm_source', 'utm_campaign', 'gclid', 'fbclid', 'referrer', 'landing_page'] as $c) {
+    foreach (['utm_source', 'utm_campaign', 'gclid', 'fbclid', 'referrer', 'landing_page', 'address', 'occupancy', 'units', 'condition', 'timeframe', 'price', 'contact_pref'] as $c) {
         if (!in_array($c, $cols, true)) $leadsDb->exec("ALTER TABLE leads ADD COLUMN $c TEXT");
     }
 }
@@ -66,7 +66,7 @@ $devices = $q($aDb, "SELECT device, COUNT(DISTINCT sid) n FROM hits WHERE day >=
 $campaigns = $q($aDb, "SELECT utm_campaign c, COUNT(DISTINCT sid) v, SUM(event='lead') l FROM hits WHERE day >= ? AND utm_campaign<>'' GROUP BY c ORDER BY v DESC LIMIT 10", [$since]);
 $bySource = $q($leadsDb, "SELECT CASE WHEN utm_source<>'' THEN utm_source WHEN gclid<>'' THEN 'google-ads' WHEN fbclid<>'' THEN 'meta-ads' WHEN referrer<>'' THEN referrer ELSE 'direct' END src, COUNT(*) n FROM leads WHERE substr(created_at,1,10) >= ? GROUP BY src ORDER BY n DESC", [$since]);
 $byType = $q($leadsDb, "SELECT type, COUNT(*) n FROM leads WHERE substr(created_at,1,10) >= ? GROUP BY type ORDER BY n DESC", [$since]);
-$list = $q($leadsDb, "SELECT id, created_at, type, location, name, email, phone, message, locale, source, status, utm_source, utm_campaign, gclid, fbclid, referrer, landing_page FROM leads ORDER BY id DESC LIMIT 100");
+$list = $q($leadsDb, "SELECT id, created_at, type, location, name, email, phone, message, locale, source, status, utm_source, utm_campaign, gclid, fbclid, referrer, landing_page, address, occupancy, units, condition, timeframe, price, contact_pref FROM leads ORDER BY id DESC LIMIT 100");
 
 ?><!doctype html>
 <html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -115,7 +115,7 @@ td,th{padding:7px 8px;border-bottom:1px solid #E4E8EB;text-align:left;vertical-a
 <section class="card" id="leads" style="margin-top:14px"><h2>Laatste aanvragen</h2><div class="wrap"><table>
 <tr><th>#</th><th>Datum</th><th>Type</th><th>Locatie</th><th>Naam</th><th>Contact</th><th>Bron</th><th>Status</th></tr>
 <?php foreach ($list as $r): $src = $r['utm_source'] ?: ($r['gclid'] ? 'google-ads' : ($r['fbclid'] ? 'meta-ads' : ($r['referrer'] ?: 'direct'))); ?>
-<tr><td><?= (int)$r['id'] ?></td><td><?= $h(substr((string)$r['created_at'], 0, 16)) ?></td><td><?= $h($r['type']) ?></td><td><?= $h($r['location']) ?></td>
+<tr><td><?= (int)$r['id'] ?></td><td><?= $h(substr((string)$r['created_at'], 0, 16)) ?></td><td><?= $h($r['type']) ?></td><td><?= $h($r['location']) ?><?php if ($r['address']): ?><div class="muted"><?= $h($r['address']) ?></div><?php endif ?><?php $d = array_filter([$r['occupancy'], $r['units'] ? $r['units'] . ' obj.' : '', $r['condition'], $r['timeframe'], $r['price'], $r['contact_pref'] ? 'via ' . $r['contact_pref'] : '']); if ($d): ?><div class="muted"><?= $h(implode(' · ', $d)) ?></div><?php endif ?></td>
 <td><?= $h($r['name']) ?><?php if ($r['message']): ?><div class="muted"><?= nl2br($h($r['message'])) ?></div><?php endif ?></td>
 <td><a href="mailto:<?= $h($r['email']) ?>"><?= $h($r['email']) ?></a><br><a href="tel:<?= $h(preg_replace('/[^+\d]/', '', (string)$r['phone'])) ?>"><?= $h($r['phone']) ?></a></td>
 <td><span class="pill"><?= $h($src) ?></span><?php if ($r['utm_campaign']): ?><div class="muted"><?= $h($r['utm_campaign']) ?></div><?php endif ?><div class="muted"><?= $h($r['source']) ?> · <?= $h($r['locale']) ?></div></td>

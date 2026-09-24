@@ -53,6 +53,10 @@ const nl = {
       title: "Contact",
       description: "Bied uw vastgoed vrijblijvend aan of stel uw vraag aan Hollands Vastgoedfonds.",
     },
+    offer: {
+      title: "Vastgoed aanbieden",
+      description: "Bied uw woning, portefeuille of bedrijfspand vrijblijvend aan bij Hollands Vastgoedfonds. In drie korte stappen, u ontvangt direct een bevestiging.",
+    },
     thanks: { title: "Bedankt voor uw aanvraag", description: "Wij hebben uw aanvraag ontvangen." },
     privacy: { title: "Privacyverklaring", description: "Hoe Hollands Vastgoedfonds met uw persoonsgegevens omgaat." },
     cookies: { title: "Cookieverklaring", description: "Welke cookies hollandsvastgoedfonds.com gebruikt." },
@@ -484,6 +488,10 @@ const en = {
     contact: {
       title: "Contact",
       description: "Offer your property without obligation or ask Hollands Vastgoedfonds a question.",
+    },
+    offer: {
+      title: "Offer your property",
+      description: "Offer your home, portfolio or business premises to Hollands Vastgoedfonds without obligation. Three short steps, instant confirmation.",
     },
     thanks: { title: "Thank you for your request", description: "We have received your request." },
     privacy: { title: "Privacy statement", description: "How Hollands Vastgoedfonds handles your personal data." },

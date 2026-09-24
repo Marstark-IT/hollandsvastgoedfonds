@@ -44,7 +44,7 @@ export function navItems(locale) {
 export default function Header({ locale }) {
   const c = t(locale);
   const items = navItems(locale);
-  const cta = { label: c.cta, href: `${href("home", locale)}#aanbieden` };
+  const cta = { label: c.cta, href: href("offer", locale) };
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">

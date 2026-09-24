@@ -55,6 +55,21 @@ $attrKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_conten
 $attr = [];
 foreach ($attrKeys as $k) $attr[$k] = $clean($attrIn[$k] ?? '', 200);
 
+// Optional details from the full offer form (/vastgoed-aanbieden/). Enum
+// fields are allow-listed; anything else is dropped rather than stored.
+$pick = fn(string $k, array $ok) => in_array($in[$k] ?? '', $ok, true) ? $in[$k] : '';
+$units = (int)($in['units'] ?? 0);
+$details = [
+    'address'      => $s('address', 120),
+    'occupancy'    => $pick('occupancy', ['verhuurd', 'leeg', 'deels', 'eigen']),
+    'units'        => ($units >= 1 && $units <= 9999) ? (string)$units : '',
+    'condition'    => $pick('condition', ['goed', 'redelijk', 'opknapper', 'onbekend']),
+    'timeframe'    => $pick('timeframe', ['direct', '3m', '6m', 'geen']),
+    'price'        => $s('price', 60),
+    'contact_pref' => $pick('contactPref', ['telefoon', 'email']),
+];
+$detailKeys = array_keys($details);
+
 $types = ['woning', 'portefeuille', 'commercieel', 'bedrijf', 'anders'];
 $digits = preg_replace('/\D/', '', $lead['phone']);
 if (!in_array($lead['type'], $types, true)
@@ -90,7 +105,7 @@ try {
         ip TEXT, user_agent TEXT, consent_at TEXT, submission_id TEXT UNIQUE)');
     // Additive migrations: attribution + status columns.
     $have = array_column($db->query('PRAGMA table_info(leads)')->fetchAll(PDO::FETCH_ASSOC), 'name');
-    foreach (array_merge($attrKeys, ['status']) as $col) {
+    foreach (array_merge($attrKeys, ['status'], $detailKeys) as $col) {
         if (!in_array($col, $have, true)) $db->exec("ALTER TABLE leads ADD COLUMN $col TEXT");
     }
 
@@ -99,9 +114,9 @@ try {
     $q->execute([$ip, gmdate('c', time() - 600)]);
     if ((int)$q->fetchColumn() >= 6) out(429, ['ok' => false, 'error' => 'rate']);
 
-    $cols = array_merge(['created_at', 'type', 'location', 'name', 'email', 'phone', 'message', 'locale', 'source', 'page', 'ip', 'user_agent', 'consent_at', 'submission_id', 'status'], $attrKeys);
+    $cols = array_merge(['created_at', 'type', 'location', 'name', 'email', 'phone', 'message', 'locale', 'source', 'page', 'ip', 'user_agent', 'consent_at', 'submission_id', 'status'], $attrKeys, $detailKeys);
     $vals = array_merge([$now, $lead['type'], $lead['location'], $lead['name'], $lead['email'], $lead['phone'], $lead['message'],
-        $lead['locale'], $lead['source'], $lead['page'], $ip, $ua, $now, $lead['sid'] ?: null, 'nieuw'], array_values($attr));
+        $lead['locale'], $lead['source'], $lead['page'], $ip, $ua, $now, $lead['sid'] ?: null, 'nieuw'], array_values($attr), array_values($details));
     $ins = $db->prepare('INSERT OR IGNORE INTO leads (' . implode(',', $cols) . ') VALUES (' . implode(',', array_fill(0, count($cols), '?')) . ')');
     $ins->execute($vals);
     $isNew = $ins->rowCount() === 1;
@@ -137,7 +152,15 @@ if ($isNew) {
         . "Naam:      {$lead['name']}\n"
         . "E-mail:    {$lead['email']}\n"
         . "Telefoon:  {$lead['phone']}\n"
-        . "Taal:      {$lead['locale']}\n\n"
+        . "Taal:      {$lead['locale']}\n"
+        . ($details['address'] ? "Adres:     {$details['address']}\n" : '')
+        . ($details['occupancy'] ? "Situatie:  {$details['occupancy']}\n" : '')
+        . ($details['units'] ? "Objecten:  {$details['units']}\n" : '')
+        . ($details['condition'] ? "Staat:     {$details['condition']}\n" : '')
+        . ($details['timeframe'] ? "Termijn:   {$details['timeframe']}\n" : '')
+        . ($details['price'] ? "Prijsidee: {$details['price']}\n" : '')
+        . ($details['contact_pref'] ? "Contact:   voorkeur {$details['contact_pref']}\n" : '')
+        . "\n"
         . "Toelichting:\n" . ($lead['message'] !== '' ? $lead['message'] : '-') . "\n\n"
         . "Herkomst:  {$src}" . ($attr['utm_campaign'] ? " / {$attr['utm_campaign']}" : '') . "\n"
         . "Landing:   {$attr['landing_page']}\n"

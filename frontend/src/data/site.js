@@ -25,6 +25,7 @@ export const ROUTES = {
   about: { nl: "/over-ons/", en: "/en/about/" },
   faq: { nl: "/veelgestelde-vragen/", en: "/en/faq/" },
   contact: { nl: "/contact/", en: "/en/contact/" },
+  offer: { nl: "/vastgoed-aanbieden/", en: "/en/offer-property/" },
   thanks: { nl: "/bedankt/", en: "/en/thank-you/" },
   privacy: { nl: "/privacy/", en: "/en/privacy/" },
   cookies: { nl: "/cookies/", en: "/en/cookies/" },
@@ -45,7 +46,7 @@ export const href = (key, locale) => ROUTES[key][locale] || ROUTES[key].nl;
 export const OG_IMAGE = {
   home: "hero-wide", approach: "region", buy: "street", residential: "residential",
   commercial: "commercial", industrial: "industrial", special: "special", about: "hero",
-  faq: "residential", contact: "street", kennisbank: "street", regions: "region",
+  faq: "residential", contact: "street", offer: "hero-wide", kennisbank: "street", regions: "region",
 };
 
 export const IMAGES = {

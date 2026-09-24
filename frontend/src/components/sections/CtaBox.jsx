@@ -16,7 +16,7 @@ export default function CtaBox({ locale }) {
           <div className="bg-band p-10 text-white md:p-14">
             <h2 className="h-section text-white">{c.finalCta.title}</h2>
             <p className="mt-5 max-w-[40ch] text-[1.1rem] text-white/90">{c.finalCta.text}</p>
-            <Link href={`${href("home", locale)}#aanbieden`} className="btn mt-8">
+            <Link href={href("offer", locale)} className="btn mt-8">
               {c.cta}
             </Link>
           </div>

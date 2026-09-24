@@ -68,7 +68,7 @@ export default function ArticleView({ article: a }) {
             <div className="mt-14 rounded bg-band p-8 text-white md:p-10">
               <p className="text-[1.4rem] font-bold">{c.finalCta.title}</p>
               <p className="mt-3 text-white/90">{c.finalCta.text}</p>
-              <Link href={`${href("home", locale)}#aanbieden`} className="btn mt-6">{c.cta}</Link>
+              <Link href={href("offer", locale)} className="btn mt-6">{c.cta}</Link>
             </div>
           </div>
 
