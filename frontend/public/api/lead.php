@@ -9,6 +9,7 @@
 
 declare(strict_types=1);
 require __DIR__ . '/_crm.php';
+require __DIR__ . '/_mail.php';
 header_remove('X-Powered-By');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -172,7 +173,7 @@ if ($isNew) {
         . "Formulier: {$lead['source']} ({$lead['page']})\n";
     $headers = "From: Hollands Vastgoedfonds <{$mailFrom}>\r\nReply-To: {$replyTo}\r\n"
         . "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n";
-    @mail($notifyTo, $enc("Nieuwe aanvraag #{$leadId}: {$labels[$lead['type']]} in {$lead['location']}"), $body, $headers, '-f' . $mailFrom);
+    hvf_mail($cfg, $notifyTo, $enc("Nieuwe aanvraag #{$leadId}: {$labels[$lead['type']]} in {$lead['location']}"), $body, $headers, $mailFrom);
 
     // 2. Confirmation to the seller, in their language.
     // This mails whatever address the form was given, so it must not become a
@@ -198,7 +199,7 @@ if ($isNew) {
     }
     $h2 = "From: Hollands Vastgoedfonds <{$mailFrom}>\r\nReply-To: {$notifyTo}\r\n"
         . "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nAuto-Submitted: auto-replied\r\n";
-    if ($sendConfirmation) @mail($replyTo, $enc($subj), $txt, $h2, '-f' . $mailFrom);
+    if ($sendConfirmation) hvf_mail($cfg, $replyTo, $enc($subj), $txt, $h2, $mailFrom);
 }
 
 // Reply to the visitor first, then push the lead to the CRM webhook (and retry
