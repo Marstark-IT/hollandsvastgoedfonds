@@ -7,3 +7,6 @@ out/
 # local tooling / raw image generations
 .mcp.json
 assets-gen/
+
+# Local-only secrets and handoff files (never commit)
+private/
