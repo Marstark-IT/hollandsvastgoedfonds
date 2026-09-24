@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { House, Buildings, Storefront, Warehouse, DotsThreeOutline, ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { submitLead } from "@/lib/api";
+import { beacon, getAttribution, pushEvent } from "@/lib/tracking";
 import { COMPANY, href } from "@/data/site";
 import { t } from "@/data/content";
 
@@ -43,7 +44,13 @@ export default function LeadForm({ locale, source = "hero", titleAs: Title = "h2
     company: "",
   });
 
+  const started = useRef(false);
   const set = (k) => (e) => {
+    if (!started.current) {
+      started.current = true;
+      pushEvent("form_start", { form_source: source });
+      beacon("form_start");
+    }
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setV((s) => ({ ...s, [k]: value }));
     if (errors[k]) setErrors((x) => ({ ...x, [k]: undefined }));
@@ -57,6 +64,7 @@ export default function LeadForm({ locale, source = "hero", titleAs: Title = "h2
     setErrors(err);
     if (Object.keys(err).length === 0) {
       setStep(2);
+      pushEvent("form_step_2", { form_source: source, lead_type: v.type });
       topRef.current?.focus();
     }
   };
@@ -73,7 +81,11 @@ export default function LeadForm({ locale, source = "hero", titleAs: Title = "h2
 
     setStatus("sending");
     try {
-      await submitLead({ ...v, locale, source, page: window.location.pathname });
+      await submitLead({ ...v, locale, source, page: window.location.pathname, attribution: getAttribution() });
+      try {
+        sessionStorage.setItem("hvf_lead", JSON.stringify({ type: v.type, source }));
+      } catch {}
+      beacon("lead", { lt: v.type });
       router.push(href("thanks", locale));
     } catch {
       setStatus("error");
@@ -180,7 +192,7 @@ export default function LeadForm({ locale, source = "hero", titleAs: Title = "h2
                 type="checkbox"
                 checked={v.consent}
                 onChange={set("consent")}
-                className="mt-1 h-5 w-5 shrink-0 accent-[#C75B0B]"
+                className="mt-1 h-5 w-5 shrink-0 accent-[#B45208]"
                 {...aria("consent")}
               />
               <span>

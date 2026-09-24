@@ -18,9 +18,25 @@ export function navItems(locale) {
         href: href(k, locale),
       })),
     },
-    { label: c.nav.approach, href: href("approach", locale) },
-    { label: c.nav.about, href: href("about", locale) },
-    { label: c.nav.faq, href: href("faq", locale) },
+    locale === "nl"
+      ? {
+          label: c.nav.approach,
+          href: href("approach", locale),
+          children: [
+            { label: c.nav.approach, href: href("approach", locale) },
+            { label: c.nav.regions, href: href("regions", locale) },
+            { label: c.nav.kennisbank, href: href("kennisbank", locale) },
+          ],
+        }
+      : { label: c.nav.approach, href: href("approach", locale) },
+    {
+      label: c.nav.about,
+      href: href("about", locale),
+      children: [
+        { label: c.nav.about, href: href("about", locale) },
+        { label: c.meta.faq.title, href: href("faq", locale) },
+      ],
+    },
     { label: c.nav.contact, href: href("contact", locale) },
   ];
 }
@@ -33,7 +49,7 @@ export default function Header({ locale }) {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">
       <div className="wrap flex h-[76px] items-center justify-between gap-6">
-        <Link href={href("home", locale)} aria-label="Hollands Vastgoedfonds, home">
+        <Link href={href("home", locale)}>
           <Logo />
         </Link>
 

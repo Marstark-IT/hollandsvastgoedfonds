@@ -1,0 +1,16 @@
+{
+  "name": "Hollands Vastgoedfonds",
+  "short_name": "Hollands",
+  "description": "Wij kopen uw vastgoed. Direct en voor eigen rekening.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "lang": "nl",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0F3B5F",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

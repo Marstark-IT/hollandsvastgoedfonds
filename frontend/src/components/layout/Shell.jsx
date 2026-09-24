@@ -1,6 +1,8 @@
 import TopBar from "@/components/layout/TopBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Analytics from "@/components/analytics/Analytics";
+import CookieConsent from "@/components/ui/CookieConsent";
 import { t } from "@/data/content";
 
 // Persistent chrome around every page. Server component: no client JS beyond
@@ -18,6 +20,8 @@ export default function Shell({ locale, children }) {
       <Header locale={locale} />
       <main id="inhoud">{children}</main>
       <Footer locale={locale} />
+      <Analytics />
+      <CookieConsent locale={locale} />
     </>
   );
 }

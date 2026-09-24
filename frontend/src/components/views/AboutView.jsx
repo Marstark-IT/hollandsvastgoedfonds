@@ -1,5 +1,8 @@
+import Image from "next/image";
 import PageHero from "@/components/sections/PageHero";
-import UspBand from "@/components/sections/UspBand";
+import Values from "@/components/sections/Values";
+import Audiences from "@/components/sections/Audiences";
+import Expectations from "@/components/sections/Expectations";
 import FormSection from "@/components/sections/FormSection";
 import { IMAGES } from "@/data/site";
 import { t } from "@/data/content";
@@ -27,12 +30,18 @@ export default function AboutView({ locale }) {
           ))}
         </div>
       </section>
-      <UspBand locale={locale} />
-      <section className="py-20 md:py-28">
-        <p className="wrap max-w-[900px] text-center text-[1.8rem] font-bold leading-snug text-brand md:text-[2.3rem]">
-          {p.closing}
-        </p>
+      <Values locale={locale} />
+      <Audiences locale={locale} />
+      <section className="relative overflow-hidden">
+        <div className="relative h-[340px] md:h-[440px]">
+          <Image src={IMAGES.heroWide} alt={c.hero.imageAlt} fill sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-brand-dark/60" />
+          <p className="wrap absolute inset-0 flex max-w-[980px] items-center justify-center text-center text-[1.7rem] font-bold leading-snug text-white md:text-[2.4rem]">
+            {p.closing}
+          </p>
+        </div>
       </section>
+      <Expectations locale={locale} />
       <FormSection locale={locale} source="about-form" />
     </>
   );

@@ -58,6 +58,14 @@ const nl = {
     cookies: { title: "Cookieverklaring", description: "Welke cookies hollandsvastgoedfonds.com gebruikt." },
     disclaimer: { title: "Disclaimer", description: "Voorwaarden voor het gebruik van deze website." },
     notFound: { title: "Pagina niet gevonden", description: "Deze pagina bestaat niet (meer)." },
+    kennisbank: {
+      title: "Kennisbank: vastgoed verkopen",
+      description: "Praktische artikelen over het verkopen van verhuurde woningen, portefeuilles, bedrijfspanden en geërfd vastgoed aan een directe koper.",
+    },
+    regions: {
+      title: "Regio's waar wij vastgoed kopen",
+      description: "Hollands Vastgoedfonds koopt vastgoed in heel Nederland. Bekijk wat wij kopen in Amsterdam, Rotterdam, Den Haag, Utrecht en andere steden.",
+    },
   },
 
   nav: {
@@ -70,6 +78,8 @@ const nl = {
     close: "Sluiten",
     skip: "Direct naar de inhoud",
     home: "Home",
+    kennisbank: "Kennisbank",
+    regions: "Regio's",
   },
   cta: "Vastgoed aanbieden",
   topbar: ["Directe koper", "Geen makelaarskosten", "Alle soorten vastgoed"],
@@ -142,10 +152,10 @@ const nl = {
   process: {
     title: "Van eerste gesprek tot overdracht",
     steps: [
-      { title: "Aanbieden", text: "U deelt de basisgegevens van uw object. Vrijblijvend en vertrouwelijk." },
-      { title: "Analyse", text: "Wij beoordelen locatie, staat, huur en potentieel." },
-      { title: "Voorstel", text: "U ontvangt een helder voorstel over prijs en voorwaarden." },
-      { title: "Overdracht", text: "Onderzoek, contract en levering bij de notaris. Wij regelen het intern." },
+      { title: "Aanbieden", text: "U deelt de basisgegevens van uw object. Vrijblijvend en vertrouwelijk.", more: ["Via het formulier in twee minuten", "Direct een bevestiging per e-mail", "Geen verplichtingen"] },
+      { title: "Analyse", text: "Wij beoordelen locatie, staat, huur en potentieel.", more: ["Persoonlijk gesprek met een acquisitiemanager", "Bezichtiging in overleg, ook met huurders", "Toetsing aan het actieve regiomandaat"] },
+      { title: "Voorstel", text: "U ontvangt een helder voorstel over prijs en voorwaarden.", more: ["Schriftelijk en onderbouwd", "Geen financieringsvoorbehoud", "U beslist in alle rust"] },
+      { title: "Overdracht", text: "Onderzoek, contract en levering bij de notaris. Wij regelen het intern.", more: ["Due diligence door ons eigen team", "Koopovereenkomst en levering via de notaris", "Overdrachtsdatum in overleg"] },
     ],
   },
 
@@ -288,6 +298,8 @@ const nl = {
       title: "Contact",
       text: "Bied uw vastgoed vrijblijvend aan via het formulier. Voor andere vragen kunt u ons mailen.",
       emailLabel: "E-mail",
+      hoursTitle: "Bereikbaarheid",
+      hoursText: "Wij behandelen elke aanvraag persoonlijk en reageren op werkdagen. U ontvangt direct een bevestiging per e-mail.",
     },
     thanks: {
       title: "Bedankt. Wij hebben uw aanvraag ontvangen.",
@@ -358,6 +370,22 @@ const nl = {
         p: "Wij gebruiken uw gegevens alleen om contact met u op te nemen over uw aanvraag en om uw object te beoordelen. De grondslag is uw toestemming en de stappen die u zelf zet richting een mogelijke overeenkomst.",
       },
       {
+        h: "Herkomst van uw aanvraag",
+        p: "Bij een aanvraag slaan wij ook op via welke weg u op onze website kwam, zoals een zoekmachine, een advertentie of een campagnelink (bijvoorbeeld utm-codes of een advertentie-ID). Zo weten wij welke kanalen werken. Tijdens uw bezoek bewaren wij dit alleen in uw browser (sessionStorage), niet in een cookie.",
+      },
+      {
+        h: "Websitestatistieken",
+        p: "Wij meten het gebruik van de website met eigen, privacyvriendelijke statistieken: bezochte pagina's, de verwijzende website, het type apparaat en de taal. Daarbij gebruiken wij geen cookies, slaan wij geen IP-adressen op en kunnen wij bezoekers niet herkennen.",
+      },
+      {
+        h: "Bevestiging per e-mail",
+        p: "Na uw aanvraag sturen wij u één bevestiging per e-mail. U ontvangt van ons geen nieuwsbrieven of reclame, tenzij u daar zelf om vraagt.",
+      },
+      {
+        h: "Advertenties en metingen",
+        p: "Als wij advertentiediensten gebruiken, zoals Google Ads of Meta, plaatsen die alleen cookies nadat u daarvoor toestemming heeft gegeven via de cookiemelding. U kunt uw keuze altijd wijzigen via 'Cookie-instellingen' onderaan de website.",
+      },
+      {
         h: "Hoe lang wij gegevens bewaren",
         p: "Leidt uw aanvraag niet tot een transactie, dan verwijderen wij uw gegevens uiterlijk 24 maanden na het laatste contact. U kunt ons altijd vragen ze eerder te verwijderen.",
       },
@@ -372,16 +400,20 @@ const nl = {
     ],
     cookies: [
       {
-        h: "Alleen noodzakelijke cookies",
-        p: "Deze website plaatst geen tracking-, advertentie- of analysecookies. Er worden geen gegevens gedeeld met advertentienetwerken.",
+        h: "Zonder toestemming: geen tracking",
+        p: "Zonder uw toestemming plaatst deze website geen tracking-, advertentie- of analysecookies. Onze eigen websitestatistieken werken zonder cookies en zonder IP-adressen.",
       },
       {
         h: "Technische opslag",
         p: "Onze hostingpartij kan een technisch noodzakelijke cookie plaatsen om de website te beveiligen tegen misbruik. Hiervoor is geen toestemming nodig.",
       },
       {
+        h: "Met uw toestemming",
+        p: "Gebruiken wij advertentie- of meetdiensten zoals Google Analytics, Google Ads of Meta, dan vragen wij eerst toestemming via een cookiemelding. U kiest zelf voor analytische en/of marketingcookies en kunt uw keuze altijd wijzigen via 'Cookie-instellingen' onderaan de website.",
+      },
+      {
         h: "Wijzigingen",
-        p: "Gaan wij in de toekomst andere cookies gebruiken, dan passen wij deze verklaring aan en vragen wij waar nodig eerst uw toestemming.",
+        p: "Gaan wij andere cookies gebruiken, dan passen wij deze verklaring aan.",
       },
     ],
     disclaimer: [
@@ -458,6 +490,8 @@ const en = {
     cookies: { title: "Cookie statement", description: "Which cookies hollandsvastgoedfonds.com uses." },
     disclaimer: { title: "Disclaimer", description: "Terms for using this website." },
     notFound: { title: "Page not found", description: "This page does not exist." },
+    kennisbank: { title: "Knowledge base", description: "Articles about selling property to a direct buyer (in Dutch)." },
+    regions: { title: "Regions", description: "Regions where Hollands Vastgoedfonds buys property (in Dutch)." },
   },
 
   nav: {
@@ -470,6 +504,8 @@ const en = {
     close: "Close",
     skip: "Skip to content",
     home: "Home",
+    kennisbank: "Knowledge base",
+    regions: "Regions",
   },
   cta: "Offer your property",
   topbar: ["Direct buyer", "No agent fees", "All property types"],
@@ -542,10 +578,10 @@ const en = {
   process: {
     title: "From first conversation to transfer",
     steps: [
-      { title: "Offer", text: "You share the basic details of your property. Without obligation, in confidence." },
-      { title: "Analysis", text: "We assess location, condition, rent and potential." },
-      { title: "Proposal", text: "You receive a clear proposal on price and terms." },
-      { title: "Transfer", text: "Due diligence, contract and transfer at the notary. We handle it in-house." },
+      { title: "Offer", text: "You share the basic details of your property. Without obligation, in confidence.", more: ["Two minutes via the form", "Instant confirmation by email", "No obligations"] },
+      { title: "Analysis", text: "We assess location, condition, rent and potential.", more: ["Personal call with an acquisition manager", "Viewing by appointment, also with tenants", "Checked against the active regional mandate"] },
+      { title: "Proposal", text: "You receive a clear proposal on price and terms.", more: ["Written and reasoned", "No financing condition", "You decide in your own time"] },
+      { title: "Transfer", text: "Due diligence, contract and transfer at the notary. We handle it in-house.", more: ["Due diligence by our own team", "Purchase agreement and transfer via the notary", "Transfer date agreed with you"] },
     ],
   },
 
@@ -688,6 +724,8 @@ const en = {
       title: "Contact",
       text: "Offer your property without obligation using the form. For other questions, email us.",
       emailLabel: "Email",
+      hoursTitle: "Availability",
+      hoursText: "Every request is handled personally and we respond on working days. You receive a confirmation email straight away.",
     },
     thanks: {
       title: "Thank you. We have received your request.",
@@ -758,6 +796,22 @@ const en = {
         p: "We only use your data to contact you about your request and to assess your property. The legal basis is your consent and the steps you take towards a possible agreement.",
       },
       {
+        h: "Where your request came from",
+        p: "With a request we also store how you reached our website, such as a search engine, an advertisement or a campaign link (for example utm codes or an ad ID). This tells us which channels work. During your visit this is kept only in your browser (sessionStorage), not in a cookie.",
+      },
+      {
+        h: "Website statistics",
+        p: "We measure website use with our own privacy-friendly statistics: pages visited, the referring website, device type and language. We use no cookies, store no IP addresses and cannot recognise visitors.",
+      },
+      {
+        h: "Confirmation by email",
+        p: "After your request we send you one confirmation email. You will not receive newsletters or advertising from us unless you ask for it.",
+      },
+      {
+        h: "Advertising and measurement",
+        p: "If we use advertising services such as Google Ads or Meta, they only place cookies after you consent in the cookie notice. You can change your choice at any time via 'Cookie settings' at the bottom of the website.",
+      },
+      {
         h: "How long we keep data",
         p: "If your request does not lead to a transaction, we delete your data no later than 24 months after the last contact. You can always ask us to delete it sooner.",
       },
@@ -772,16 +826,20 @@ const en = {
     ],
     cookies: [
       {
-        h: "Only necessary cookies",
-        p: "This website does not place tracking, advertising or analytics cookies. No data is shared with advertising networks.",
+        h: "Without consent: no tracking",
+        p: "Without your consent this website places no tracking, advertising or analytics cookies. Our own website statistics work without cookies and without IP addresses.",
       },
       {
         h: "Technical storage",
         p: "Our hosting provider may place a technically necessary cookie to protect the website against abuse. No consent is required for this.",
       },
       {
+        h: "With your consent",
+        p: "If we use advertising or measurement services such as Google Analytics, Google Ads or Meta, we first ask for consent in a cookie notice. You choose analytics and/or marketing cookies yourself and can change your choice at any time via 'Cookie settings' at the bottom of the website.",
+      },
+      {
         h: "Changes",
-        p: "If we use other cookies in the future, we will update this statement and ask for your consent first where required.",
+        p: "If we use other cookies, we will update this statement.",
       },
     ],
     disclaimer: [

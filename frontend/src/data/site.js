@@ -30,12 +30,23 @@ export const ROUTES = {
   cookies: { nl: "/cookies/", en: "/en/cookies/" },
   disclaimer: { nl: "/disclaimer/", en: "/en/disclaimer/" },
   notFound: { nl: "/niet-gevonden/", en: "/en/not-found/" },
+  // Dutch-only sections (articles and local pages target Dutch searchers).
+  kennisbank: { nl: "/kennisbank/", en: null },
+  regions: { nl: "/regios/", en: null },
 };
 
 // Pages kept out of the sitemap and marked noindex.
 export const NOINDEX = ["thanks", "notFound"];
 
-export const href = (key, locale) => ROUTES[key][locale];
+// Falls back to the Dutch URL when a page has no English version.
+export const href = (key, locale) => ROUTES[key][locale] || ROUTES[key].nl;
+
+// Open Graph image per route key (1200x630 JPGs in public/og).
+export const OG_IMAGE = {
+  home: "hero-wide", approach: "region", buy: "street", residential: "residential",
+  commercial: "commercial", industrial: "industrial", special: "special", about: "hero",
+  faq: "residential", contact: "street", kennisbank: "street", regions: "region",
+};
 
 export const IMAGES = {
   hero: "/images/hero.webp",

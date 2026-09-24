@@ -1,60 +1,89 @@
-import { COMPANY, ROUTES, NOINDEX } from "@/data/site";
+import { COMPANY, ROUTES, NOINDEX, OG_IMAGE } from "@/data/site";
 import { t } from "@/data/content";
+import { articlePath } from "@/data/articles";
+import { regionPath } from "@/data/regions";
 
 const OG_LOCALE = { nl: "nl_NL", en: "en_GB" };
+const abs = (path) => `${COMPANY.url}${path}`;
 
-// Page metadata for a route key, with canonical + hreflang alternates so the
-// Dutch and English versions point at each other.
-export function pageMetadata(key, locale) {
-  const m = t(locale).meta[key];
-  const path = ROUTES[key][locale];
-  const noindex = NOINDEX.includes(key);
-  const title = key === "home" ? { absolute: m.title } : m.title;
-
+// One place that turns page facts into Next metadata: canonical, hreflang (only
+// for languages that exist), Open Graph with a page-specific image, robots.
+export function buildMeta({ title, description, path, locale, alternates, image = "hero-wide", type = "website", noindex = false, absoluteTitle = false, published }) {
+  const languages = {};
+  if (alternates?.nl) languages["nl-NL"] = alternates.nl;
+  if (alternates?.en) languages["en-GB"] = alternates.en;
+  if (alternates?.nl) languages["x-default"] = alternates.nl;
+  const og = `/og/${image}.jpg`;
   return {
-    title,
-    description: m.description,
-    alternates: {
-      canonical: path,
-      languages: {
-        "nl-NL": ROUTES[key].nl,
-        "en-GB": ROUTES[key].en,
-        "x-default": ROUTES[key].nl,
-      },
-    },
+    title: absoluteTitle ? { absolute: title } : title,
+    description,
+    alternates: { canonical: path, ...(Object.keys(languages).length > 1 ? { languages } : {}) },
     openGraph: {
-      type: "website",
+      type,
       url: path,
       siteName: COMPANY.name,
       locale: OG_LOCALE[locale],
-      alternateLocale: OG_LOCALE[locale === "nl" ? "en" : "nl"],
-      title: m.title,
-      description: m.description,
-      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: COMPANY.name }],
+      title,
+      description,
+      images: [{ url: og, width: 1200, height: 630, alt: title }],
+      ...(published ? { publishedTime: published, modifiedTime: published } : {}),
     },
-    twitter: {
-      card: "summary_large_image",
-      title: m.title,
-      description: m.description,
-      images: ["/og.jpg"],
-    },
-    robots: noindex ? { index: false, follow: true } : { index: true, follow: true },
+    twitter: { card: "summary_large_image", title, description, images: [og] },
+    robots: noindex ? { index: false, follow: true } : { index: true, follow: true, "max-image-preview": "large" },
   };
 }
 
+export function pageMetadata(key, locale) {
+  const m = t(locale).meta[key] || t("nl").meta[key];
+  return buildMeta({
+    title: m.title,
+    description: m.description,
+    path: ROUTES[key][locale] || ROUTES[key].nl,
+    locale,
+    alternates: ROUTES[key],
+    image: OG_IMAGE[key],
+    noindex: NOINDEX.includes(key),
+    absoluteTitle: key === "home",
+  });
+}
+
+export const articleMetadata = (a) =>
+  buildMeta({ title: a.title, description: a.description, path: articlePath(a.slug), locale: "nl", alternates: { nl: articlePath(a.slug) }, image: a.image === "hero" ? "hero" : a.image, type: "article", published: a.date });
+
+export const regionMetadata = (r) =>
+  buildMeta({
+    title: `Vastgoed verkopen in ${r.name}`,
+    description: `${r.intro.split(". ")[0]}. Geen makelaar, discreet en snel duidelijkheid.`,
+    path: regionPath(r.slug),
+    locale: "nl",
+    alternates: { nl: regionPath(r.slug) },
+    image: r.image,
+  });
+
 export function baseMetadata(locale) {
+  const verification = {};
+  if (process.env.NEXT_PUBLIC_GSC_VERIFICATION) verification.google = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
+  if (process.env.NEXT_PUBLIC_BING_VERIFICATION) verification.other = { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION };
   return {
     metadataBase: new URL(COMPANY.url),
     title: { default: COMPANY.name, template: `%s | ${COMPANY.name}` },
     applicationName: COMPANY.name,
+    authors: [{ name: COMPANY.name, url: COMPANY.url }],
+    creator: COMPANY.name,
+    publisher: COMPANY.name,
+    category: "real estate",
+    manifest: "/site.webmanifest",
     icons: {
-      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }],
+      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/favicon.ico", sizes: "any" }],
       apple: "/apple-touch-icon.png",
     },
-    formatDetection: { telephone: false },
+    formatDetection: { telephone: false, address: false, email: false },
+    ...(Object.keys(verification).length ? { verification } : {}),
     other: { "content-language": locale },
   };
 }
+
+// ---------- JSON-LD ----------
 
 export const organizationLd = (locale) => ({
   "@context": "https://schema.org",
@@ -62,11 +91,14 @@ export const organizationLd = (locale) => ({
   "@id": `${COMPANY.url}/#organization`,
   name: COMPANY.name,
   url: COMPANY.url,
-  logo: `${COMPANY.url}/logo.png`,
+  logo: { "@type": "ImageObject", url: `${COMPANY.url}/logo.png`, width: 362, height: 132 },
+  image: `${COMPANY.url}/og/hero-wide.jpg`,
   email: COMPANY.email,
   description: t(locale).meta.home.description,
-  areaServed: { "@type": "Country", name: "Netherlands" },
-  knowsAbout: ["Real estate investment", "Residential real estate", "Commercial real estate", "Logistics real estate"],
+  areaServed: { "@type": "Country", name: "Nederland" },
+  knowsLanguage: ["nl", "en"],
+  contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: COMPANY.email, availableLanguage: ["Dutch", "English"], areaServed: "NL" }],
+  knowsAbout: ["Vastgoedbelegging", "Residentieel vastgoed", "Commercieel vastgoed", "Logistiek vastgoed", "Vastgoedportefeuilles"],
 });
 
 export const websiteLd = (locale) => ({
@@ -79,6 +111,7 @@ export const websiteLd = (locale) => ({
   publisher: { "@id": `${COMPANY.url}/#organization` },
 });
 
+// trail items: { key, label } for route keys, or { path, label } for articles/cities.
 export const breadcrumbLd = (locale, trail) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -86,18 +119,43 @@ export const breadcrumbLd = (locale, trail) => ({
     "@type": "ListItem",
     position: i + 1,
     name: c.label,
-    item: `${COMPANY.url}${ROUTES[c.key][locale]}`,
+    item: abs(c.path || ROUTES[c.key][locale] || ROUTES[c.key].nl),
   })),
 });
 
-export const faqLd = (locale) => ({
+export const faqLd = (items) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: t(locale).faq.map((f) => ({
+  mainEntity: items.map((f) => ({
     "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
+});
+
+export const serviceLd = ({ name, description, path, area = "Nederland", serviceType }) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name,
+  description,
+  serviceType: serviceType || name,
+  url: abs(path),
+  provider: { "@id": `${COMPANY.url}/#organization` },
+  areaServed: { "@type": area === "Nederland" ? "Country" : "City", name: area },
+});
+
+export const articleLd = (a) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: a.title,
+  description: a.description,
+  image: [abs(`/og/${a.image}.jpg`)],
+  datePublished: a.date,
+  dateModified: a.date,
+  inLanguage: "nl-NL",
+  mainEntityOfPage: abs(articlePath(a.slug)),
+  author: { "@type": "Organization", name: COMPANY.name, url: COMPANY.url },
+  publisher: { "@id": `${COMPANY.url}/#organization` },
 });
 
 export function JsonLd({ data }) {

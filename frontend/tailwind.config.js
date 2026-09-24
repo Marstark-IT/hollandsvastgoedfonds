@@ -9,7 +9,7 @@ export default {
       colors: {
         brand: { DEFAULT: "#0F3B5F", dark: "#0A2B46" },
         band: "#1F5F86",
-        accent: { DEFAULT: "#C75B0B", hover: "#A94B07" },
+        accent: { DEFAULT: "#B45208", hover: "#933F04" },
         ink: "#1E2A33",
         muted: "#4A5561",
         soft: "#F3F4F4",

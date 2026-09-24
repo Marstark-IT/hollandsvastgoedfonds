@@ -12,6 +12,14 @@
   body {
     @apply bg-white text-ink antialiased;
     line-height: 1.6;
+    overflow-wrap: break-word;
+  }
+  /* Dutch compounds ("rendementsontwikkeling") must be able to break on phones. */
+  @media (max-width: 639px) {
+    h1, h2, h3, p, li, summary, label { hyphens: auto; -webkit-hyphens: auto; }
+  }
+  @media (max-width: 380px) {
+    html { font-size: 17px; }
   }
   h1, h2, h3 {
     @apply text-brand font-bold;
@@ -20,7 +28,7 @@
   }
   p { text-wrap: pretty; }
   :focus-visible {
-    outline: 3px solid #C75B0B;
+    outline: 3px solid #B45208;
     outline-offset: 2px;
   }
   [id] { scroll-margin-top: 110px; }

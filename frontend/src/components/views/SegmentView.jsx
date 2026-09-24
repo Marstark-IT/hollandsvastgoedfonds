@@ -2,19 +2,30 @@ import Image from "next/image";
 import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import PageHero from "@/components/sections/PageHero";
 import Criteria from "@/components/sections/Criteria";
+import Situations from "@/components/sections/Situations";
+import Process from "@/components/sections/Process";
+import Compare from "@/components/sections/Compare";
+import FaqAccordion from "@/components/sections/FaqAccordion";
 import SegmentGrid from "@/components/sections/SegmentGrid";
+import ArticleTeaser from "@/components/sections/ArticleTeaser";
 import CtaBox from "@/components/sections/CtaBox";
 import LeadForm from "@/components/forms/LeadForm";
-import { IMAGES } from "@/data/site";
+import { IMAGES, href } from "@/data/site";
+import { ARTICLES } from "@/data/articles";
 import { t } from "@/data/content";
+import { x } from "@/data/extra";
+import { JsonLd, faqLd, serviceLd } from "@/lib/seo";
 
 const ALL = ["residential", "commercial", "industrial", "special"];
 
 // Shared template for the four "what we buy" detail pages.
 export default function SegmentView({ locale, segment }) {
   const c = t(locale);
+  const e = x(locale);
   const page = c.pages[segment];
   const seg = c.segments.items[segment];
+  const faq = e.segmentFaq[segment];
+  const related = ARTICLES.filter((a) => a.segment === segment).map((a) => a.slug);
   return (
     <>
       <PageHero
@@ -52,16 +63,25 @@ export default function SegmentView({ locale, segment }) {
       </section>
 
       <Criteria locale={locale} />
+      <Situations locale={locale} />
+      <Process locale={locale} />
+      <Compare locale={locale} />
+      <FaqAccordion locale={locale} items={faq} title={e.segmentFaqTitle} />
 
-      <section className="pt-20 md:pt-28">
+      <section className="bg-soft pt-20 md:pt-28">
         <div className="wrap">
           <h2 className="h-section">{c.pages.segment.others}</h2>
         </div>
+        <div className="-mt-10 md:-mt-14">
+          <SegmentGrid locale={locale} keys={ALL.filter((k) => k !== segment)} heading={false} as="h3" />
+        </div>
       </section>
-      <div className="-mt-10 md:-mt-14">
-        <SegmentGrid locale={locale} keys={ALL.filter((k) => k !== segment)} heading={false} as="h3" />
-      </div>
+
+      <ArticleTeaser locale={locale} slugs={related.length ? related : undefined} />
       <CtaBox locale={locale} />
+
+      <JsonLd data={serviceLd({ name: page.title, description: page.text, path: href(segment, locale), serviceType: seg.title })} />
+      <JsonLd data={faqLd(faq)} />
     </>
   );
 }

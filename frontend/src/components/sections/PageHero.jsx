@@ -28,12 +28,12 @@ export default function PageHero({ locale, image, imageAlt, title, text, trail }
                 </Link>
               </li>
               {trail.map((b, i) => (
-                <li key={b.key} className="inline-flex items-center gap-1.5">
+                <li key={b.path || b.key} className="inline-flex items-center gap-1.5">
                   <CaretRight size={12} weight="bold" />
                   {i === trail.length - 1 ? (
                     <span aria-current="page" className="font-semibold text-ink">{b.label}</span>
                   ) : (
-                    <Link href={ROUTES[b.key][locale]} className="hover:text-accent hover:underline">
+                    <Link href={b.path || ROUTES[b.key][locale] || ROUTES[b.key].nl} className="hover:text-accent hover:underline">
                       {b.label}
                     </Link>
                   )}

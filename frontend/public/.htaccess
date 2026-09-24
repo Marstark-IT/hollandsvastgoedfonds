@@ -8,6 +8,10 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://hollandsvastgoedfonds.com%{REQUEST_URI} [L,R=301]
 
+# /path/index.html -> /path/ (one canonical URL per page).
+RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+RewriteRule ^(.*/)?index\.html$ /$1 [L,R=301]
+
 # Folder URLs without trailing slash -> with slash (canonical form).
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}/index.html -f
@@ -15,17 +19,24 @@ RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
 
 ErrorDocument 404 /niet-gevonden/index.html
 
-<FilesMatch "^\.">
+<FilesMatch "^\.(?!well-known)">
+  Require all denied
+</FilesMatch>
+# PHP's error_log() writes a plain "error_log" file next to the script, and
+# editors/backups leave copies; none of these should ever be served.
+<FilesMatch "(^error_log$|\.(bak|old|orig|swp|sql|sqlite|db|log|ini)$|~$)">
   Require all denied
 </FilesMatch>
 
 <IfModule mod_headers.c>
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "DENY"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), browsing-topics=()"
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
-  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.nl https://*.gstatic.com https://www.facebook.com https://*.clarity.ms https://c.bing.com; font-src 'self' data:; style-src 'self' 'unsafe-inline' https://tagmanager.google.com; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://*.clarity.ms https://bat.bing.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.nl https://www.facebook.com https://*.clarity.ms https://bat.bing.com; frame-src https://www.googletagmanager.com https://td.doubleclick.net https://bid.g.doubleclick.net https://www.facebook.com; upgrade-insecure-requests"
 </IfModule>
 
 <IfModule mod_expires.c>
@@ -34,6 +45,7 @@ ErrorDocument 404 /niet-gevonden/index.html
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType application/manifest+json "access plus 7 days"
 </IfModule>
 <IfModule mod_headers.c>
   <FilesMatch "\.(js|css|woff2)$">
@@ -43,3 +55,6 @@ ErrorDocument 404 /niet-gevonden/index.html
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>
+
+AddType application/manifest+json .webmanifest
+AddDefaultCharset utf-8

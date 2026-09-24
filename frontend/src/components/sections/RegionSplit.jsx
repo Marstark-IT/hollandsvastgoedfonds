@@ -6,7 +6,7 @@ import { t } from "@/data/content";
 export default function RegionSplit({ locale }) {
   const c = t(locale);
   return (
-    <section className="pb-20 md:pb-28">
+    <section className="py-20 md:py-28">
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
         <div className="relative aspect-[16/10] overflow-hidden rounded">
           <Image src={IMAGES.region} alt={c.region.imageAlt} fill sizes="(min-width:1024px) 55vw, 100vw" className="object-cover" />
