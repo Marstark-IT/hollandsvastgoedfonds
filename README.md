@@ -47,4 +47,8 @@ The form posts to `/api/lead.php`. Each lead is stored in
 ];
 ```
 
-Download all leads as CSV: `https://hollandsvastgoedfonds.com/api/leads.php?key=<export_key>`.
+Download all leads as CSV: open `https://hollandsvastgoedfonds.com/api/leads.php`
+and log in with any username and the `export_key` as password. The key is not
+accepted in the URL, which keeps it out of access logs and browser history.
+
+Repository secrets also include `SSH_KNOWN_HOSTS` (pinned host keys of the server).
