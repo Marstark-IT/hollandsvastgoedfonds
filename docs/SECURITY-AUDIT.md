@@ -30,6 +30,7 @@ A stranger cannot read your leads, break into the server through the site, or pl
 
 ## Notes (not headline issues)
 
-- `api/t.php` (analytics) accepts writes from anyone with no cap, so someone could fill the analytics database. It contains no personal data.
+- `api/t.php` (analytics) accepts writes from anyone. This is fine, because it stores no personal data and is now capped at 200 hits per visit per day and 50,000 per day site-wide.
+- The dashboard's own strict CSP is replaced by the site-wide one from `.htaccess`. Risk is low because every value is escaped. The one-line fix has been handed to the developer.
 - The new CSP allows Google Tag Manager, Meta, Clarity and Bing. This is fine for marketing, but anyone with access to the GTM container can run code on the site, so keep that access tight.
 - Hostinger's CDN can be bypassed by going to the origin IP directly. The security headers still apply there, because they come from `.htaccess`.
