@@ -6,8 +6,9 @@ Last audit: 24 September 2026. Written for the owner and whoever runs marketing.
 
 | Check | Result |
 |---|---|
-| Google PageSpeed Insights, live, mobile | Performance 96, Accessibility 100, Best Practices 96 before the fix below (100 after), SEO 100 |
-| Core Web Vitals (live, mobile lab) | LCP 2.3 s, CLS 0, TBT 100 ms (all "good") |
+| Google PageSpeed Insights, live, mobile | Performance 99, Accessibility 100, Best Practices 100, SEO 100 |
+| Google PageSpeed Insights, live, desktop | Performance 99, Accessibility 100, Best Practices 100, SEO 100 |
+| Core Web Vitals (live lab) | Mobile: LCP 1.4 s, TBT 40 ms, CLS 0. Desktop: LCP 1.2 s, TBT 90 ms, CLS 0 (all "good") |
 | Lighthouse SEO, all 46 indexable pages | 100 on every page |
 | Lighthouse Accessibility, all 50 pages | 100 on every page |
 | On-page crawl (titles, descriptions, H1, headings, canonical, hreflang, Open Graph, alt text, links, JSON-LD, word count) | 0 issues on 50 pages |
